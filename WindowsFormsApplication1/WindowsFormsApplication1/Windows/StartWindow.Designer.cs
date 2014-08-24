@@ -30,8 +30,8 @@
         {
             this.OpenBtn = new System.Windows.Forms.Button();
             this.SaveBtn = new System.Windows.Forms.Button();
-            this.team1 = new System.Windows.Forms.ComboBox();
-            this.team2 = new System.Windows.Forms.ComboBox();
+            this.home = new System.Windows.Forms.ComboBox();
+            this.away = new System.Windows.Forms.ComboBox();
             this.Team1Players = new System.Windows.Forms.TextBox();
             this.Start = new System.Windows.Forms.Button();
             this.Stadium = new System.Windows.Forms.TextBox();
@@ -57,22 +57,24 @@
             this.SaveBtn.Text = "Save";
             this.SaveBtn.UseVisualStyleBackColor = true;
             // 
-            // team1
+            // home
             // 
-            this.team1.FormattingEnabled = true;
-            this.team1.Location = new System.Drawing.Point(12, 104);
-            this.team1.Name = "team1";
-            this.team1.Size = new System.Drawing.Size(184, 21);
-            this.team1.TabIndex = 2;
-            this.team1.SelectedIndexChanged += new System.EventHandler(this.team1_SelectedIndexChanged);
+            this.home.FormattingEnabled = true;
+            this.home.Location = new System.Drawing.Point(12, 104);
+            this.home.Name = "home";
+            this.home.Size = new System.Drawing.Size(184, 21);
+            this.home.TabIndex = 2;
+            this.home.Text = "Home";
+            this.home.SelectedIndexChanged += new System.EventHandler(this.home_SelectedIndexChanged);
             // 
-            // team2
+            // away
             // 
-            this.team2.FormattingEnabled = true;
-            this.team2.Location = new System.Drawing.Point(247, 104);
-            this.team2.Name = "team2";
-            this.team2.Size = new System.Drawing.Size(184, 21);
-            this.team2.TabIndex = 3;
+            this.away.FormattingEnabled = true;
+            this.away.Location = new System.Drawing.Point(247, 104);
+            this.away.Name = "away";
+            this.away.Size = new System.Drawing.Size(184, 21);
+            this.away.TabIndex = 3;
+            this.away.Text = "Away";
             // 
             // Team1Players
             // 
@@ -129,8 +131,8 @@
             this.Controls.Add(this.Stadium);
             this.Controls.Add(this.Start);
             this.Controls.Add(this.Team1Players);
-            this.Controls.Add(this.team2);
-            this.Controls.Add(this.team1);
+            this.Controls.Add(this.away);
+            this.Controls.Add(this.home);
             this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.OpenBtn);
             this.Name = "StartWindow";
@@ -144,8 +146,8 @@
 
         private System.Windows.Forms.Button OpenBtn;
         private System.Windows.Forms.Button SaveBtn;
-        private System.Windows.Forms.ComboBox team1;
-        private System.Windows.Forms.ComboBox team2;
+        private System.Windows.Forms.ComboBox home;
+        private System.Windows.Forms.ComboBox away;
         private System.Windows.Forms.TextBox Team1Players;
         private System.Windows.Forms.Button Start;
         private System.Windows.Forms.TextBox Stadium;

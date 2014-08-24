@@ -19,9 +19,9 @@ namespace WindowsFormsApplication1
             teams = new List<Team>();
             InitializeComponent();
             AddTeams();
-            this.team1.SelectedIndexChanged += new System.EventHandler(team1_SelectedIndexChanged);
-            this.team2.SelectedIndexChanged += new System.EventHandler(team2_SelectedIndexChanged);
-            
+            this.home.SelectedIndexChanged += new System.EventHandler(home_SelectedIndexChanged);
+            this.away.SelectedIndexChanged += new System.EventHandler(away_SelectedIndexChanged);
+            this.Date.Text = System.DateTime.Now.ToString();
 
         }
 
@@ -78,18 +78,19 @@ namespace WindowsFormsApplication1
 
             foreach (Team t in teams)
             {
-                team1.Items.Add(t.Name);
-                team2.Items.Add(t.Name);
+                home.Items.Add(t.Name);
+                away.Items.Add(t.Name);
             }
         }
 
-        private void team1_SelectedIndexChanged(object sender, EventArgs e)
+        private void home_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
-
+            string std = "";
             foreach (Team t in teams)
             {
                 if(t.Name == (string)cb.SelectedItem){
+                    std = t.Stadium;
                     Team1Players.Clear();
                     foreach (Player p in t.Members)
                     {
@@ -98,9 +99,11 @@ namespace WindowsFormsApplication1
                     break;
                 }
             }
+            this.Stadium.Text = std;
+
         }
 
-        private void team2_SelectedIndexChanged(object sender, EventArgs e)
+        private void away_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
 
