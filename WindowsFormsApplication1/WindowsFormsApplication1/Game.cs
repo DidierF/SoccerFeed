@@ -12,13 +12,17 @@ namespace WindowsFormsApplication1
         //Currently playing teams.
         private Team[] teams;
         //Game annotations.
-        private ArrayList annotations;
+        private List<Annotation> annotations;
         //Game starting time.
         private DateTime startTime;
 
+        public DateTime GameTime { get { return startTime; } }
+
         public Game(Team t1, Team t2)
         {
-
+            teams = new Team[] { t1, t2 };
+            annotations = new List<Annotation>();
+            startTime = System.DateTime.Now;
         }
 
         public void addAnnotation()
@@ -34,6 +38,7 @@ namespace WindowsFormsApplication1
         {
             return teams[1];
         }
+        
 
     }
 }

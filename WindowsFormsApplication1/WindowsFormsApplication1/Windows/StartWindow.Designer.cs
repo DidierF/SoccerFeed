@@ -28,108 +28,111 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.OpenBtn = new System.Windows.Forms.Button();
+            this.SaveBtn = new System.Windows.Forms.Button();
+            this.team1 = new System.Windows.Forms.ComboBox();
+            this.team2 = new System.Windows.Forms.ComboBox();
+            this.Team1Players = new System.Windows.Forms.TextBox();
+            this.Start = new System.Windows.Forms.Button();
+            this.Stadium = new System.Windows.Forms.TextBox();
+            this.Date = new System.Windows.Forms.TextBox();
+            this.Team2Players = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
-            // button1
+            // OpenBtn
             // 
-            this.button1.Location = new System.Drawing.Point(13, 13);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Open";
-            this.button1.UseVisualStyleBackColor = true;
+            this.OpenBtn.Location = new System.Drawing.Point(13, 13);
+            this.OpenBtn.Name = "OpenBtn";
+            this.OpenBtn.Size = new System.Drawing.Size(75, 23);
+            this.OpenBtn.TabIndex = 0;
+            this.OpenBtn.Text = "Open";
+            this.OpenBtn.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // SaveBtn
             // 
-            this.button2.Location = new System.Drawing.Point(13, 43);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Save";
-            this.button2.UseVisualStyleBackColor = true;
+            this.SaveBtn.Location = new System.Drawing.Point(13, 43);
+            this.SaveBtn.Name = "SaveBtn";
+            this.SaveBtn.Size = new System.Drawing.Size(75, 23);
+            this.SaveBtn.TabIndex = 1;
+            this.SaveBtn.Text = "Save";
+            this.SaveBtn.UseVisualStyleBackColor = true;
             // 
-            // comboBox1
+            // team1
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(12, 104);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(184, 21);
-            this.comboBox1.TabIndex = 2;
+            this.team1.FormattingEnabled = true;
+            this.team1.Location = new System.Drawing.Point(12, 104);
+            this.team1.Name = "team1";
+            this.team1.Size = new System.Drawing.Size(184, 21);
+            this.team1.TabIndex = 2;
+            this.team1.SelectedIndexChanged += new System.EventHandler(this.team1_SelectedIndexChanged);
             // 
-            // comboBox2
+            // team2
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(247, 104);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(184, 21);
-            this.comboBox2.TabIndex = 3;
+            this.team2.FormattingEnabled = true;
+            this.team2.Location = new System.Drawing.Point(247, 104);
+            this.team2.Name = "team2";
+            this.team2.Size = new System.Drawing.Size(184, 21);
+            this.team2.TabIndex = 3;
             // 
-            // textBox1
+            // Team1Players
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 151);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(184, 285);
-            this.textBox1.TabIndex = 4;
+            this.Team1Players.Location = new System.Drawing.Point(12, 151);
+            this.Team1Players.Multiline = true;
+            this.Team1Players.Name = "Team1Players";
+            this.Team1Players.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.Team1Players.Size = new System.Drawing.Size(184, 328);
+            this.Team1Players.TabIndex = 4;
             // 
-            // button3
+            // Start
             // 
-            this.button3.Location = new System.Drawing.Point(306, 456);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(125, 42);
-            this.button3.TabIndex = 5;
-            this.button3.Text = "Start";
-            this.button3.UseVisualStyleBackColor = true;
+            this.Start.Location = new System.Drawing.Point(306, 492);
+            this.Start.Name = "Start";
+            this.Start.Size = new System.Drawing.Size(125, 42);
+            this.Start.TabIndex = 5;
+            this.Start.Text = "Start";
+            this.Start.UseVisualStyleBackColor = true;
             // 
-            // textBox2
+            // Stadium
             // 
-            this.textBox2.Location = new System.Drawing.Point(13, 478);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(123, 20);
-            this.textBox2.TabIndex = 6;
-            this.textBox2.Text = "Stadium";
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Stadium.Location = new System.Drawing.Point(13, 514);
+            this.Stadium.Name = "Stadium";
+            this.Stadium.Size = new System.Drawing.Size(123, 20);
+            this.Stadium.TabIndex = 6;
+            this.Stadium.Text = "Stadium";
+            this.Stadium.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox3
+            // Date
             // 
-            this.textBox3.Location = new System.Drawing.Point(177, 478);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(123, 20);
-            this.textBox3.TabIndex = 7;
-            this.textBox3.Text = "Date";
-            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Date.Location = new System.Drawing.Point(177, 514);
+            this.Date.Name = "Date";
+            this.Date.Size = new System.Drawing.Size(123, 20);
+            this.Date.TabIndex = 7;
+            this.Date.Text = "Date";
+            this.Date.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // textBox4
+            // Team2Players
             // 
-            this.textBox4.Location = new System.Drawing.Point(247, 151);
-            this.textBox4.Multiline = true;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(184, 285);
-            this.textBox4.TabIndex = 8;
+            this.Team2Players.Location = new System.Drawing.Point(247, 151);
+            this.Team2Players.Multiline = true;
+            this.Team2Players.Name = "Team2Players";
+            this.Team2Players.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.Team2Players.Size = new System.Drawing.Size(184, 328);
+            this.Team2Players.TabIndex = 8;
             // 
             // StartWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(443, 510);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(443, 555);
+            this.Controls.Add(this.Team2Players);
+            this.Controls.Add(this.Date);
+            this.Controls.Add(this.Stadium);
+            this.Controls.Add(this.Start);
+            this.Controls.Add(this.Team1Players);
+            this.Controls.Add(this.team2);
+            this.Controls.Add(this.team1);
+            this.Controls.Add(this.SaveBtn);
+            this.Controls.Add(this.OpenBtn);
             this.Name = "StartWindow";
             this.Text = "StartWindow";
             this.ResumeLayout(false);
@@ -139,14 +142,14 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Button OpenBtn;
+        private System.Windows.Forms.Button SaveBtn;
+        private System.Windows.Forms.ComboBox team1;
+        private System.Windows.Forms.ComboBox team2;
+        private System.Windows.Forms.TextBox Team1Players;
+        private System.Windows.Forms.Button Start;
+        private System.Windows.Forms.TextBox Stadium;
+        private System.Windows.Forms.TextBox Date;
+        private System.Windows.Forms.TextBox Team2Players;
     }
 }

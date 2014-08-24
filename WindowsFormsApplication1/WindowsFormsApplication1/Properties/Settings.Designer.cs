@@ -26,7 +26,8 @@ namespace WindowsFormsApplication1.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=INSPIRONN5110-D;Initial Catalog=SoccerFeed;Integrated Security=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=INSPIRONN5110-D;Initial Catalog=SoccerFeed;Integrated Security=True;M" +
+            "ultipleActiveResultSets=True")]
         public string SoccerFeedConnectionString {
             get {
                 return ((string)(this["SoccerFeedConnectionString"]));
