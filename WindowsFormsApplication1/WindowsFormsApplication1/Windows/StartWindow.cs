@@ -14,8 +14,14 @@ namespace WindowsFormsApplication1
     public partial class StartWindow : Form
     {
         private List<Team> teams;
+        private Game newGame;
+
+        public Game NewGame { get { return newGame; } }
         public StartWindow()
         {
+            //TODO: Open and Save Buttons
+
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             teams = new List<Team>();
             InitializeComponent();
             AddTeams();
@@ -133,6 +139,29 @@ namespace WindowsFormsApplication1
             }
 
             return result;
+        }
+
+        private void Start_Click(object sender, EventArgs e)
+        {
+            Team[] playingTeams = new Team[2];
+
+            foreach (Team t in teams)
+            {
+                if (t.Name == (string)home.SelectedItem)
+                {
+                    playingTeams[0] = t;
+                }
+                else if (t.Name == (string)away.SelectedItem)
+                {
+                    playingTeams[1] = t;
+                }
+            }
+
+            newGame = new Game(playingTeams[0], playingTeams[1]);
+            if (playingTeams[0] != null && playingTeams[1] != null && playingTeams[0] != playingTeams[1])
+            {
+                this.DialogResult = DialogResult.OK;
+            }
         }
         
 
