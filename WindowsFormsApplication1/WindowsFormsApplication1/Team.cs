@@ -6,7 +6,7 @@ using System.Text;
 
 namespace WindowsFormsApplication1
 {
-    class Team
+    public class Team
     {
         private string name;
         private string stadium;
@@ -22,6 +22,11 @@ namespace WindowsFormsApplication1
                 if (members == null)
                 {
                     members = value;
+                    inGamePlayers = new List<Player>();
+                    for (int i = 0; i < 11; i++)
+                    {
+                        inGamePlayers.Add(members[i]);
+                    }
                 }
             }
         }

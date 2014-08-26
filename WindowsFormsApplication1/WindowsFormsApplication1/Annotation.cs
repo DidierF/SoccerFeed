@@ -7,25 +7,36 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApplication1
 {
-    class Annotation
+    public class Annotation
     {
-        //TODO: Finish writing possible motives
+        //TODO: Finish writing possible motives.
+        //TODO: Add  toString method.
         /// <summary>
         /// Annotation Motives.
         /// </summary>
         public static int GOAL = 1;
-        public static int PENALTY = 2;
-        public static int CORNER = 3;
-        public static int FREE_THROW = 4;
+        public static int FOUL = 2;
+        public static int CARD = 3;
+        public static int SUBSTITUTION = 4;
+        public static int GOAL_KICK = 5;
+        public static int THROW_IN = 6;
+        public static int CORNER = 7;
+        public static int OFFSIDE = 8;
+        public static int FREE_THROW = 9;
+        public static int PENALTY = 10;
 
-        
-        private float time;
-        private string player;
-        private string Aux;
+        private int id;
         private int motive;
+        private string aux;
+        private Player player;
+        private Player auxPlayer;
+        private DateTime time;
 
-        public float Time { get { return time; } }
-        public string Player { get { return player; } }
+        public int ID { get { return id; } }
+        public DateTime Time { get { return time; } }
+        public Player Player { get { return player; } }
+        public Player AuxPlayer { get { return auxPlayer; } set { this.auxPlayer = value; } }
+        public string Aux { get { return aux; } set { this.aux = value; } }
         public string Motive
         {
             get
@@ -44,11 +55,18 @@ namespace WindowsFormsApplication1
             }
         }
 
-        public Annotation(float time, String playerName, int motive)
+        public Annotation(DateTime time, Player player, int motive)
         {
             this.time = time;
-            this.player = playerName;
+            this.player = player;
             this.motive = motive;
+        }
+
+        public override string ToString()
+        {
+            string result = "";
+            //TODO
+            return result;
         }
     }
 }

@@ -29,111 +29,133 @@ namespace WindowsFormsApplication1
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.components = new System.ComponentModel.Container();
+            this.annotationHistory = new System.Windows.Forms.TextBox();
+            this.playComboBox = new System.Windows.Forms.ComboBox();
+            this.playerComboBox = new System.Windows.Forms.ComboBox();
+            this.auxComboBox = new System.Windows.Forms.ComboBox();
+            this.time = new System.Windows.Forms.Label();
+            this.team1Score = new System.Windows.Forms.Label();
+            this.team2Score = new System.Windows.Forms.Label();
+            this.team1Check = new System.Windows.Forms.RadioButton();
+            this.team2Check = new System.Windows.Forms.RadioButton();
+            this.insertBtn = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
-            // textBox1
+            // annotationHistory
             // 
-            this.textBox1.Location = new System.Drawing.Point(1, 160);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(641, 351);
-            this.textBox1.TabIndex = 1;
+            this.annotationHistory.Location = new System.Drawing.Point(-1, 160);
+            this.annotationHistory.Multiline = true;
+            this.annotationHistory.Name = "annotationHistory";
+            this.annotationHistory.Size = new System.Drawing.Size(643, 351);
+            this.annotationHistory.TabIndex = 1;
             // 
-            // checkBox1
+            // playComboBox
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(13, 13);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(62, 17);
-            this.checkBox1.TabIndex = 4;
-            this.checkBox1.Text = "Team 1";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.playComboBox.FormattingEnabled = true;
+            this.playComboBox.Location = new System.Drawing.Point(233, 76);
+            this.playComboBox.Name = "playComboBox";
+            this.playComboBox.Size = new System.Drawing.Size(179, 21);
+            this.playComboBox.TabIndex = 6;
             // 
-            // checkBox2
+            // playerComboBox
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(13, 37);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(62, 17);
-            this.checkBox2.TabIndex = 5;
-            this.checkBox2.Text = "Team 2";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.playerComboBox.FormattingEnabled = true;
+            this.playerComboBox.Location = new System.Drawing.Point(13, 76);
+            this.playerComboBox.Name = "playerComboBox";
+            this.playerComboBox.Size = new System.Drawing.Size(179, 21);
+            this.playerComboBox.TabIndex = 7;
             // 
-            // comboBox3
+            // auxComboBox
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(233, 76);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(179, 21);
-            this.comboBox3.TabIndex = 6;
+            this.auxComboBox.FormattingEnabled = true;
+            this.auxComboBox.Location = new System.Drawing.Point(450, 76);
+            this.auxComboBox.Name = "auxComboBox";
+            this.auxComboBox.Size = new System.Drawing.Size(179, 21);
+            this.auxComboBox.TabIndex = 8;
             // 
-            // comboBox4
+            // time
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(13, 76);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(179, 21);
-            this.comboBox4.TabIndex = 7;
+            this.time.AutoSize = true;
+            this.time.Location = new System.Drawing.Point(595, 17);
+            this.time.Name = "time";
+            this.time.Size = new System.Drawing.Size(34, 13);
+            this.time.TabIndex = 9;
+            this.time.Text = "00:00";
             // 
-            // comboBox1
+            // team1Score
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(450, 76);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(179, 21);
-            this.comboBox1.TabIndex = 8;
+            this.team1Score.AutoSize = true;
+            this.team1Score.Location = new System.Drawing.Point(145, 15);
+            this.team1Score.Name = "team1Score";
+            this.team1Score.Size = new System.Drawing.Size(13, 13);
+            this.team1Score.TabIndex = 10;
+            this.team1Score.Text = "0";
             // 
-            // label1
+            // team2Score
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(594, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(34, 13);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "00:00";
+            this.team2Score.AutoSize = true;
+            this.team2Score.Location = new System.Drawing.Point(145, 34);
+            this.team2Score.Name = "team2Score";
+            this.team2Score.Size = new System.Drawing.Size(13, 13);
+            this.team2Score.TabIndex = 11;
+            this.team2Score.Text = "0";
             // 
-            // label2
+            // team1Check
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(82, 13);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(13, 13);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "0";
+            this.team1Check.AutoSize = true;
+            this.team1Check.Location = new System.Drawing.Point(13, 13);
+            this.team1Check.Name = "team1Check";
+            this.team1Check.Size = new System.Drawing.Size(85, 17);
+            this.team1Check.TabIndex = 12;
+            this.team1Check.TabStop = true;
+            this.team1Check.Text = "radioButton1";
+            this.team1Check.UseVisualStyleBackColor = true;
+            this.team1Check.CheckedChanged += new System.EventHandler(this.team1Check_CheckedChanged);
             // 
-            // label3
+            // team2Check
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(82, 37);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(13, 13);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "0";
+            this.team2Check.AutoSize = true;
+            this.team2Check.Location = new System.Drawing.Point(13, 32);
+            this.team2Check.Name = "team2Check";
+            this.team2Check.Size = new System.Drawing.Size(85, 17);
+            this.team2Check.TabIndex = 13;
+            this.team2Check.TabStop = true;
+            this.team2Check.Text = "radioButton2";
+            this.team2Check.UseVisualStyleBackColor = true;
+            this.team2Check.CheckedChanged += new System.EventHandler(this.team2Check_CheckedChanged);
             // 
-            // Form1
+            // insertBtn
+            // 
+            this.insertBtn.Location = new System.Drawing.Point(513, 112);
+            this.insertBtn.Name = "insertBtn";
+            this.insertBtn.Size = new System.Drawing.Size(116, 36);
+            this.insertBtn.TabIndex = 14;
+            this.insertBtn.Text = "Insert Annotation";
+            this.insertBtn.UseVisualStyleBackColor = true;
+            this.insertBtn.Click += new System.EventHandler(this.insertBtn_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            // 
+            // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(641, 507);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.comboBox4);
-            this.Controls.Add(this.comboBox3);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.textBox1);
-            this.Name = "Form1";
+            this.Controls.Add(this.insertBtn);
+            this.Controls.Add(this.team2Check);
+            this.Controls.Add(this.team1Check);
+            this.Controls.Add(this.team2Score);
+            this.Controls.Add(this.team1Score);
+            this.Controls.Add(this.time);
+            this.Controls.Add(this.auxComboBox);
+            this.Controls.Add(this.playerComboBox);
+            this.Controls.Add(this.playComboBox);
+            this.Controls.Add(this.annotationHistory);
+            this.Name = "MainWindow";
             this.Text = "SoccerFeed";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -142,15 +164,17 @@ namespace WindowsFormsApplication1
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private CheckBox checkBox1;
-        private CheckBox checkBox2;
-        private ComboBox comboBox3;
-        private ComboBox comboBox4;
-        private ComboBox comboBox1;
-        private Label label1;
-        private Label label2;
-        private Label label3;
+        private System.Windows.Forms.TextBox annotationHistory;
+        private ComboBox playComboBox;
+        private ComboBox playerComboBox;
+        private ComboBox auxComboBox;
+        private Label time;
+        private Label team1Score;
+        private Label team2Score;
+        private RadioButton team1Check;
+        private RadioButton team2Check;
+        private Button insertBtn;
+        private Timer timer1;
     }
 }
 

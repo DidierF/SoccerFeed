@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApplication1
 {
-    class Game
+    public class Game
     {
+        //TODO: Get the Time from StartWindow.
+
+        private int id;
         //Currently playing teams.
         private Team[] teams;
         //Game annotations.
@@ -16,29 +19,29 @@ namespace WindowsFormsApplication1
         //Game starting time.
         private DateTime startTime;
 
+        public int ID { get { return id; } }
         public DateTime GameTime { get { return startTime; } }
 
-        public Game(Team t1, Team t2)
+        public Game(int id, Team t1, Team t2)
         {
+            this.id = id;
             teams = new Team[] { t1, t2 };
             annotations = new List<Annotation>();
             startTime = System.DateTime.Now;
         }
 
-        public void addAnnotation()
+        public void addAnnotation(Annotation an)
         {
 
         }
 
-        public Team getTeam1()
+        public Team homeTeam()
         {
             return teams[0];
         }
-        public Team getTeam2()
+        public Team awayTeam()
         {
             return teams[1];
         }
-        
-
     }
 }

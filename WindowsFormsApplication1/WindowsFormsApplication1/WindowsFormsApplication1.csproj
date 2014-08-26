@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Annotation.cs" />
+    <Compile Include="DataBaseInterface.cs" />
     <Compile Include="SoccerFeedDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

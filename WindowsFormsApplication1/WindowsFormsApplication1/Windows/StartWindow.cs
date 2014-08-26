@@ -15,79 +15,35 @@ namespace WindowsFormsApplication1
     {
         private List<Team> teams;
         private Game newGame;
-
+        //private DataBaseInterface dbI;
+        private SqlConnectionStringBuilder cnb;
         public Game NewGame { get { return newGame; } }
+        
         public StartWindow()
         {
             //TODO: Open and Save Buttons
 
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            teams = new List<Team>();
             InitializeComponent();
-            AddTeams();
+            
+            cnb = new SqlConnectionStringBuilder(Properties.Settings.Default.SoccerFeedConnectionString);
+            cnb.MaxPoolSize = 2;
+
+            //teams = new List<Team>();
+
+            teams = new DataBaseInterface().GetTeams();
+
             this.home.SelectedIndexChanged += new System.EventHandler(home_SelectedIndexChanged);
             this.away.SelectedIndexChanged += new System.EventHandler(away_SelectedIndexChanged);
             this.Date.Text = System.DateTime.Now.ToString();
-
-        }
-
-        private void AddTeams()
-        {
-            SqlConnectionStringBuilder cnb = new SqlConnectionStringBuilder(Properties.Settings.Default.SoccerFeedConnectionString);
-            cnb.MaxPoolSize = 2;
-
-            using (SqlConnection cn = new SqlConnection(cnb.ConnectionString))
-            {
-                string teamName = "";
-                List<Player> p;
-
-                SqlCommand command = new SqlCommand();
-                command.Connection = cn;
-                command.CommandType = CommandType.Text;
-                command.CommandText = "select * from Team;";
-
-                SqlCommand command2 = new SqlCommand();
-                command2.Connection = cn;
-                command2.CommandType = CommandType.Text;
-                
-                
-                cn.Open();
-
-                SqlDataReader reader = command.ExecuteReader();
-                SqlDataReader reader2; 
-                
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        teamName = removeSpaces(String.Format("{0}", reader[0]));
-                        teams.Add(new Team(teamName, removeSpaces(String.Format("{0}", reader[1]))));
-                        command2.CommandText = "select * from player where TeamName = '" + teamName + "'";
-                        reader2 = command2.ExecuteReader();
-                        p = new List<Player>();
-                        if (reader2.HasRows)
-                        {
-                            while (reader2.Read())
-                            {
-                                p.Add(new Player(removeSpaces(String.Format("{0}", reader2[1])), 
-                                    removeSpaces(String.Format("{0}", reader2[2])),
-                                    removeSpaces(String.Format("{0}", reader2[3]))));
-                            }
-                        }
-                        teams[teams.Count - 1].Members = p;
-                        reader2.Close();
-                    }
-                }
-
-                reader.Close();
-            }
-
             foreach (Team t in teams)
             {
                 home.Items.Add(t.Name);
                 away.Items.Add(t.Name);
             }
         }
+
+        
 
         private void home_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -126,21 +82,7 @@ namespace WindowsFormsApplication1
                 }
             }
         }
-
-        private string removeSpaces(string str)
-        {
-            string result = "";
-            char c;
-            for(int i = 0; i < str.Length; i++){
-                c = str[i];
-                if(c != ' ' || (c == ' ' && i != str.Length-1 && str[i + 1] != ' ')){
-                    result += c;
-                }
-            }
-
-            return result;
-        }
-
+        
         private void Start_Click(object sender, EventArgs e)
         {
             Team[] playingTeams = new Team[2];
@@ -157,7 +99,7 @@ namespace WindowsFormsApplication1
                 }
             }
 
-            newGame = new Game(playingTeams[0], playingTeams[1]);
+            newGame = new Game(new DataBaseInterface().GetNewGameID(),playingTeams[0], playingTeams[1]);
             if (playingTeams[0] != null && playingTeams[1] != null && playingTeams[0] != playingTeams[1])
             {
                 this.DialogResult = DialogResult.OK;

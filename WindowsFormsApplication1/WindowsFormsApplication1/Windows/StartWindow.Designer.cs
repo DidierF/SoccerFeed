@@ -93,6 +93,7 @@
             this.Start.TabIndex = 5;
             this.Start.Text = "Start";
             this.Start.UseVisualStyleBackColor = true;
+            this.Start.Click += new System.EventHandler(this.Start_Click);
             // 
             // Stadium
             // 
