@@ -256,8 +256,8 @@ namespace WindowsFormsApplication1
 
             using (connection)
             {
-                string query = "insert into annotation value (" + n.ID + "," + n.Motive + "," +
-                    n.Aux + "," + g.ID +"," + n.Player + ","  + n.AuxPlayer + "," + n.Time +")";
+                string query = "insert into annotation (ID, Motive, Time, Game, MainPlayerID, AuxPlayerID)" +  
+                "value (" + n.ID + "," + n.Motive + "," + n.Time + "," + g.ID +"," + n.Player + ","  + n.AuxPlayer + ")";
                 SqlCommand cmd = new SqlCommand(query, connection);
                 cmd.CommandType = CommandType.Text;
 
@@ -298,15 +298,35 @@ namespace WindowsFormsApplication1
                         playerCmd.CommandText = "select * from player where ID = " + rdr.GetInt32(5);
                         playerRdr = playerCmd.ExecuteReader();
                         
+                        int motive = GetMotiveInt(RemoveSpaces(string.Format("{0}", rdr[1])));
+
                         annotations.Add(new Annotation(time,
                             new Player(RemoveSpaces(string.Format("{0}", playerRdr[1])), string.Format("{0}", playerRdr[2]),
-                                RemoveSpaces(string.Format("{0}", playerRdr[3])), playerRdr.GetInt32(0)),
-                            );
+                                RemoveSpaces(string.Format("{0}", playerRdr[3])), playerRdr.GetInt32(0)), motive));
+                        playerRdr.Close();
                     }
                 }
+                rdr.Close();
             }
 
             return annotations;
+        }
+
+        private int GetMotiveInt(string motiveString)
+        {
+            int motiveInt = 0;
+            string[] allMotives = new string[11];
+            Annotation.GetPossibleMotives(allMotives);
+
+            for (int i = 0; i < 11; i++ )
+            {
+                if (allMotives[i] == motiveString)
+                {
+                    motiveInt = i + 1;
+                }
+            }
+
+            return motiveInt;
         }
 
         public int GetNewAnnotationID()

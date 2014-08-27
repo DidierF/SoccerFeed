@@ -29,8 +29,8 @@ namespace WindowsFormsApplication1
             team2Check.Text = game.awayTeam().Name;
             playComboBox.Items.AddRange(new string[] 
             {
-                "Gol", "Falta", "Tarjeta", "Cambio", "Saque", "Tiro de Esquina",
-                "Despeje", "Posicion Adelantada", "Tiro Libre", "Penal"
+                "Goal", "Foul", "Red Card", "Yellow Card", "Substitution",
+                "Goal Kick", "Throw In", "Corner", "Offside", "Free Throw", "Penalty"
             });
         }
 
