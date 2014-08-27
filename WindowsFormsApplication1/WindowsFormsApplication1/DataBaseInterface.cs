@@ -14,7 +14,6 @@ namespace WindowsFormsApplication1
     public class DataBaseInterface
     {
         //TODO: Save/Get Annotation
-        //TODO: Save Game
 
         SqlConnectionStringBuilder csb = new SqlConnectionStringBuilder(Properties.Settings.Default.SoccerFeedConnectionString);
 
@@ -94,13 +93,13 @@ namespace WindowsFormsApplication1
 
         public void SaveGame(Game gm)
         {
-            //TODO: Must Save GameTeam;
-
             SqlConnection connection = new SqlConnection(csb.ConnectionString);
             int ID = gm.ID;
             string stadium = gm.homeTeam().Stadium;
             DateTime time = gm.GameTime;
-
+            
+            //Not sure if connection works like that.
+            //Might have to create different using.
             using (connection)
             {
                 SqlCommand command = new SqlCommand();
@@ -109,8 +108,21 @@ namespace WindowsFormsApplication1
                 command.CommandText = "insert into Game value (" + ID + ", " + stadium + ", " + time + ")" ;
 
                 connection.Open();
-
+                
                 command.ExecuteNonQuery();
+
+                connection.Close();
+                connection.Open();
+                
+                command.CommandText = "insert into GameTeam value (" + gm.ID + ", " + gm.homeTeam().Name + ")";
+                command.ExecuteNonQuery();
+
+                connection.Close();
+                connection.Open();
+
+                command.CommandText = "insert into GameTeam value (" + gm.ID + ", " + gm.awayTeam().Name + ")";
+                command.ExecuteNonQuery();
+                
             }
 
         }
@@ -118,7 +130,6 @@ namespace WindowsFormsApplication1
         public List<Game> GetAllGames()
         {
             List<Game> games = new List<Game>();
-            List<Team> teams = new List<Team>();
             csb.MaxPoolSize = 2;
 
             SqlConnection connection = new SqlConnection(csb.ConnectionString);
@@ -151,22 +162,8 @@ namespace WindowsFormsApplication1
                         TeamsCommand.CommandText = "select * from GameTeam where GameID = " + id.ToString();
                         teamsReader = TeamsCommand.ExecuteReader();
 
-                        if (teamsReader.HasRows)
-                        {
-                            int i = 0;
-                            while (teamsReader.Read())
-                            {
-                                foreach (Team t in teams)
-                                {
-                                    if (t.Name == RemoveSpaces(String.Format("{0}", teamsReader[0])))
-                                    {
-                                        gameTeams[i++] = t;
-                                    }
-                                }
-
-                            }
-                        }
-                        games.Add(new Game(id, teams[0], teams[1]));
+                        GetGameTeams(gameTeams, teamsReader);
+                        games.Add(new Game(id, gameTeams[0], gameTeams[1]));
                         teamsReader.Close();
                     }
                 }
@@ -177,9 +174,62 @@ namespace WindowsFormsApplication1
             return games;
         }
 
-        public Game GetGame(int gameID) //Not Implemented
+        public Game GetGame(int gameID)
         {
-            return null;
+            SqlConnection connection = new SqlConnection(csb.ConnectionString);
+            Game g;
+            Team[] t = new Team[2];
+            using(connection)
+            {
+                //Not sure if needed
+                //SqlCommand cmd = new SqlCommand();
+                //cmd.Connection = connection;
+                //cmd.CommandType = CommandType.Text;
+                //cmd.CommandText = "select * from Game where GameID = " + gameID;
+
+                SqlCommand cmd2 = new SqlCommand();
+                cmd2.Connection = connection;
+                cmd2.CommandType = CommandType.Text;
+                cmd2.CommandText = "select * from GameTeam where GameID = " + gameID;
+
+                //Not sure if needed
+                //SqlDataReader rdr1 = cmd.ExecuteReader();
+                //if (rdr1.HasRows)
+                //{
+                    
+                //}
+                //rdr1.Close();
+                
+
+                SqlDataReader rdr2 = cmd2.ExecuteReader();
+                GetGameTeams(t, rdr2);
+                
+                rdr2.Close();
+            }
+            
+            g = new Game(gameID, t[0], t[1]);
+
+            return g;
+        }
+
+        private void GetGameTeams(Team[] teamsArray, SqlDataReader reader)
+        {
+            if (reader.HasRows)
+            {
+                int i = 0;
+                List<Team> teams = new List<Team>();
+                while (reader.Read())
+                {
+                    foreach (Team tm in teams)
+                    {
+                        if (tm.Name == RemoveSpaces(String.Format("{0}", reader[0])))
+                        {
+                            teamsArray[i++] = tm;
+                        }
+                    }
+
+                }
+            }
         }
 
         public int GetNewGameID()
@@ -200,14 +250,61 @@ namespace WindowsFormsApplication1
             return games;
         }
 
-        public void SaveAnnotation(Annotation n) //Not Implemented
+        public void SaveAnnotation(Game g, Annotation n)
         {
-            int ID = 0;
+            SqlConnection connection = new SqlConnection(csb.ConnectionString);
+
+            using (connection)
+            {
+                string query = "insert into annotation value (" + n.ID + "," + n.Motive + "," +
+                    n.Aux + "," + g.ID +"," + n.Player + ","  + n.AuxPlayer + "," + n.Time +")";
+                SqlCommand cmd = new SqlCommand(query, connection);
+                cmd.CommandType = CommandType.Text;
+
+                cmd.ExecuteNonQuery();
+
+
+            }
+
         }
 
         public List<Annotation> GetAnnotations(Game gm) //Not Implemented
         {
             List<Annotation> annotations = new List<Annotation>();
+
+            SqlConnection connection = new SqlConnection(csb.ConnectionString);
+
+            using(connection)
+            {
+                string query = "select * from Annotation where GameID = " + gm.ID;
+                
+                SqlCommand cmd = new SqlCommand(query, connection);
+                cmd.CommandType = CommandType.Text;
+
+                SqlCommand playerCmd = new SqlCommand();
+                playerCmd.Connection = connection;
+                playerCmd.CommandType = CommandType.Text;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+                SqlDataReader playerRdr;
+                if (rdr.HasRows)
+                {
+                    DateTime time;
+                    while (rdr.Read())
+                    {
+                        time = rdr.GetDateTime(3);
+                        //TODO: Get the annotation motive as string.
+
+                        playerCmd.CommandText = "select * from player where ID = " + rdr.GetInt32(5);
+                        playerRdr = playerCmd.ExecuteReader();
+                        
+                        annotations.Add(new Annotation(time,
+                            new Player(RemoveSpaces(string.Format("{0}", playerRdr[1])), string.Format("{0}", playerRdr[2]),
+                                RemoveSpaces(string.Format("{0}", playerRdr[3])), playerRdr.GetInt32(0)),
+                            );
+                    }
+                }
+            }
 
             return annotations;
         }

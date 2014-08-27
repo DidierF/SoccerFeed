@@ -17,18 +17,18 @@ namespace WindowsFormsApplication1
         /// </summary>
         public static int GOAL = 1;
         public static int FOUL = 2;
-        public static int CARD = 3;
-        public static int SUBSTITUTION = 4;
-        public static int GOAL_KICK = 5;
-        public static int THROW_IN = 6;
-        public static int CORNER = 7;
-        public static int OFFSIDE = 8;
-        public static int FREE_THROW = 9;
-        public static int PENALTY = 10;
+        public static int RED_CARD = 3;
+        public static int YELLOW_CARD = 4;
+        public static int SUBSTITUTION = 5;
+        public static int GOAL_KICK = 6;
+        public static int THROW_IN = 7;
+        public static int CORNER = 8;
+        public static int OFFSIDE = 9;
+        public static int FREE_THROW = 10;
+        public static int PENALTY = 11;
 
         private int id;
         private int motive;
-        private string aux;
         private Player player;
         private Player auxPlayer;
         private DateTime time;
@@ -36,8 +36,7 @@ namespace WindowsFormsApplication1
         public int ID { get { return id; } }
         public DateTime Time { get { return time; } }
         public Player Player { get { return player; } }
-        public Player AuxPlayer { get { return auxPlayer; } set { this.auxPlayer = value; } }
-        public string Aux { get { return aux; } set { this.aux = value; } }
+        public Player AuxPlayer { get { return auxPlayer; } }
         public string Motive
         {
             get
@@ -47,9 +46,25 @@ namespace WindowsFormsApplication1
                     case 1:
                         return "Goal";
                     case 2:
-                        return "Penalty";
+                        return "Foul";
                     case 3:
+                        return "Red Card";
+                    case 4:
+                        return "Yellow Card";
+                    case 5:
+                        return "Substitution";
+                    case 6:
+                        return "Goal Kick";
+                    case 7:
+                        return "Throw In";
+                    case 8:
                         return "Corner";
+                    case 9:
+                        return "Offside";
+                    case 10:
+                        return "Free Throw";
+                    case 11:
+                        return "Penalty";
                     default:
                         return "";
                 }
@@ -113,6 +128,16 @@ namespace WindowsFormsApplication1
             }
             //TODO
             return result;
+        }
+
+        public static void GetPossibleMotives(string[] str)
+        {
+            if (str.Length >= 11)
+            {
+                str = new string[] { "Goal", "Foul", "Red Card",
+                    "Yellow Card", "Substitution", "Goal Kick", 
+                    "Throw In", "Corner", "Offside", "Free Throw", "Penalty"};
+            }
         }
     }
 }
