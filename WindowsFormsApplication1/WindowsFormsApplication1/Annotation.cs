@@ -11,6 +11,7 @@ namespace WindowsFormsApplication1
     {
         //TODO: Finish writing possible motives.
         //TODO: Add  toString method.
+        //TODO: Revisar el string de anotaciones. 
         /// <summary>
         /// Annotation Motives.
         /// </summary>
@@ -62,9 +63,54 @@ namespace WindowsFormsApplication1
             this.motive = motive;
         }
 
+        public Annotation(DateTime time, Player player, Player auxplayer, int motive)
+        {
+            this.time = time;
+            this.player = player;
+            this.auxPlayer = auxplayer;
+            this.motive = motive; 
+        }
+
         public override string ToString()
         {
             string result = "";
+
+            switch (motive)
+            {
+                case 1:
+                    if (auxPlayer != null)
+                    {
+                        result = "[" + time + "] " + player + " scored a " + Motive + " assisted by " + auxPlayer;
+                    }
+                    else
+                    {
+                        result = "[" + time + "] " + player + " scored a " + Motive;
+                    }
+                    break; 
+
+                case 2:
+                    if (auxPlayer != null)
+                    {
+                        result = "[" + time + "] " + player + " performed a " + Motive + " assisted by " + auxPlayer;
+                    }
+                    else
+                    {
+                        result = "[" + time + "] " + player + " performed a " + Motive + "kick";
+                    }
+                    break; 
+
+                case 3:
+                     if (auxPlayer != null)
+                    {
+                        result = "[" + time + "] " + player + " performed a " + Motive + " assisted by " + auxPlayer;
+                    }
+                    else
+                    {
+                        result = "[" + time + "] " + player + " performed a " + Motive + "kick";
+                    }
+                    break; 
+
+            }
             //TODO
             return result;
         }
