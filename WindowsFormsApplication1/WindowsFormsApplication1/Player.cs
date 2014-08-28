@@ -18,7 +18,7 @@ namespace WindowsFormsApplication1
         public string Name { get { return name; } }
         public string Number { get { return number; } }
         public string Position { get { return position; } }
-        public bool HasPlayed { get { return hasPlayed; } }
+        public bool HasPlayed { get { return hasPlayed; } set { hasPlayed = value; } }
         
         public Player(string name, string number, string pos, int id)
         {

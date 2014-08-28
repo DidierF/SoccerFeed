@@ -26,6 +26,7 @@ namespace WindowsFormsApplication1
                     for (int i = 0; i < 11; i++)
                     {
                         inGamePlayers.Add(members[i]);
+                        members[i].HasPlayed = true;
                     }
                 }
             }

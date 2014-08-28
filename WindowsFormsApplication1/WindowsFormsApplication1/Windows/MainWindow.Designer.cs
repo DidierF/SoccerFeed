@@ -58,6 +58,7 @@ namespace WindowsFormsApplication1
             this.playComboBox.Name = "playComboBox";
             this.playComboBox.Size = new System.Drawing.Size(179, 21);
             this.playComboBox.TabIndex = 6;
+            this.playComboBox.SelectedIndexChanged += new System.EventHandler(this.playComboBox_SelectedIndexChanged);
             // 
             // playerComboBox
             // 

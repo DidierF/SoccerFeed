@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
@@ -68,6 +69,67 @@ namespace WindowsFormsApplication1
             string aux = "";
 
             //game.addAnnotation(new Annotation(time, player, motive));
+        }
+
+        private void playComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox cb = (ComboBox)sender;
+            List<Player> players = new List<Player>();
+            switch (cb.SelectedIndex)
+            {
+                case 2:
+                case 3:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                    auxComboBox.ResetText();
+                    auxComboBox.Enabled = false;
+                    break;
+                case 0:
+                    auxComboBox.ResetText();
+                    auxComboBox.Enabled = true;
+                    if (team1Check.Checked)
+                    {
+                        players = game.homeTeam().InGamePlayers;
+                    }
+                    else if (team2Check.Checked)
+                    {
+                        players = game.awayTeam().InGamePlayers;
+                    }
+                    break;
+                case 4:
+                    auxComboBox.ResetText();
+                    auxComboBox.Enabled = true;
+                    if (team1Check.Checked)
+                    {
+                        players = game.homeTeam().AvailablePlayers();
+                    }
+                    else if (team2Check.Checked)
+                    {
+                        players = game.awayTeam().AvailablePlayers();
+                    }
+                    break;
+                case 1:
+                    auxComboBox.ResetText();
+                    auxComboBox.Enabled = true;
+                    if (team1Check.Checked)
+                    {
+                        players = game.awayTeam().InGamePlayers;
+                    }
+                    else if (team2Check.Checked)
+                    {
+                        players = game.homeTeam().InGamePlayers;
+                    }
+                    break;
+            }
+            auxComboBox.Items.Clear();
+            foreach (Player p in players)
+            {
+                auxComboBox.Items.Add(p.Name);
+            }
         }
 
 
