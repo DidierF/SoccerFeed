@@ -76,7 +76,7 @@ namespace WindowsFormsApplication1
             this.time = time;
             this.player = player;
             this.motive = motive;
-           // this.id = id; 
+            //this.id = id; 
         }
 
         public Annotation(DateTime time, Player player, Player auxplayer, int motive)
@@ -85,7 +85,7 @@ namespace WindowsFormsApplication1
             this.player = player;
             this.auxPlayer = auxplayer;
             this.motive = motive;
-           // this.id = id; 
+            //this.id = id; 
         }
 
         public override string ToString()
@@ -108,8 +108,6 @@ namespace WindowsFormsApplication1
                     result = "[" + time + "] " + player + " performed a" + Motive + "to " + auxPlayer;
                     break; 
                 case 3:
-                    result = "[" + time + "] " + player + " received a " + Motive;
-                    break; 
                 case 4:
                     result = "[" + time + "] " + player + " received a " + Motive;
                     break; 
@@ -117,20 +115,10 @@ namespace WindowsFormsApplication1
                     result = "[" + time + "]" + player + " was replaced by " + auxPlayer;
                     break; 
                 case 6:
-                    result = "[" + time + "] " + player + " performed a " + Motive;
-                    break; 
                 case 7:
-                    result = "[" + time + "] " + player + " performed a " + Motive;
-                    break; 
                 case 8:
-                    result = "[" + time + "] " + player + " performed a " + Motive;
-                    break; 
                 case 9: 
-                    result = "[" + time + "] " + player + " performed a " + Motive;
-                    break; 
                 case 10: 
-                    result = "[" + time + "] " + player + " performed a " + Motive;
-                    break; 
                 case 11: 
                     result = "[" + time + "] " + player + " performed a " + Motive;
                     break; 
