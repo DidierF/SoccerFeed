@@ -76,7 +76,7 @@ namespace WindowsFormsApplication1
             this.time = time;
             this.player = player;
             this.motive = motive;
-            //this.id = id; 
+            this.id = new DataBaseInterface().GetNewAnnotationID();  
         }
 
         public Annotation(DateTime time, Player player, Player auxplayer, int motive)
@@ -85,7 +85,7 @@ namespace WindowsFormsApplication1
             this.player = player;
             this.auxPlayer = auxplayer;
             this.motive = motive;
-            //this.id = id; 
+            this.id = new DataBaseInterface().GetNewAnnotationID(); 
         }
 
         public override string ToString()
