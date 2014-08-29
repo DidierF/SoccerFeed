@@ -32,7 +32,7 @@ namespace WindowsFormsApplication1
 
         public void addAnnotation(Annotation an)
         {
-
+            new DataBaseInterface().SaveAnnotation(this, an); 
         }
 
         public Team homeTeam()

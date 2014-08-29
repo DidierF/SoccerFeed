@@ -8,7 +8,10 @@ namespace WindowsFormsApplication1
     {
         private Game game;
         private DateTime currentTime;
-        private TimeSpan actualTime; 
+        private TimeSpan actualTime;
+        private Team homeTeam; 
+        private Player mainPlayer, auxPlayer; 
+        private int annotationMotive; 
 
         public Game Game
         {
@@ -68,11 +71,17 @@ namespace WindowsFormsApplication1
 
         private void insertBtn_Click(object sender, EventArgs e)
         {
-            Player player;
+            DateTime currentTime = new DateTime(); 
             int motive = playerComboBox.SelectedIndex;
-            float time = 0;
-            string aux = "";
 
+            if(auxComboBox.Enabled == true)
+            {
+                game.addAnnotation(new Annotation(currentTime.Add(actualTime), this.mainPlayer, this.auxPlayer, annotationMotive)); 
+            }
+            else
+            {
+                game.addAnnotation(new Annotation(currentTime.Add(actualTime), this.mainPlayer, annotationMotive)); 
+            }
             //game.addAnnotation(new Annotation(time, player, motive));
         }
 
@@ -134,6 +143,25 @@ namespace WindowsFormsApplication1
             foreach (Player p in players)
             {
                 auxComboBox.Items.Add(p.Name);
+            }
+            annotationMotive = cb.SelectedIndex;
+            if(team1Check.Checked)
+            {
+                this.mainPlayer = game.homeTeam().AvailablePlayers()[playerComboBox.SelectedIndex];
+                try
+                {
+                    this.auxPlayer = game.awayTeam().AvailablePlayers()[auxComboBox.SelectedIndex];
+                }
+                catch { }
+            }
+            else
+            {
+                this.mainPlayer = game.awayTeam().AvailablePlayers()[playerComboBox.SelectedIndex];
+                try
+                {
+                    this.auxPlayer = game.homeTeam().AvailablePlayers()[auxComboBox.SelectedIndex]; 
+                }
+                catch { }
             }
         }
 

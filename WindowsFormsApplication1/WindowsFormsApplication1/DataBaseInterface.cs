@@ -256,6 +256,7 @@ namespace WindowsFormsApplication1
 
             using (connection)
             {
+                connection.Open(); 
                 string query = "insert into annotation (ID, Motive, Time, Game, MainPlayerID, AuxPlayerID)" +  
                 "value (" + n.ID + "," + n.Motive + "," + n.Time + "," + g.ID +"," + n.Player + ","  + n.AuxPlayer + ")";
                 SqlCommand cmd = new SqlCommand(query, connection);
@@ -346,5 +347,6 @@ namespace WindowsFormsApplication1
             }
             return annotations;
         }
+
     }
 }
