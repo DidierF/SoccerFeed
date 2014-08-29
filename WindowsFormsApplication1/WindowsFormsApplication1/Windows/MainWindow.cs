@@ -7,6 +7,8 @@ namespace WindowsFormsApplication1
     public partial class MainWindow : Form
     {
         private Game game;
+        private DateTime currentTime;
+        private TimeSpan actualTime; 
 
         public Game Game
         {
@@ -28,11 +30,14 @@ namespace WindowsFormsApplication1
             this.Game = gm;
             team1Check.Text = game.homeTeam().Name;
             team2Check.Text = game.awayTeam().Name;
+            currentTime = new DateTime(); 
             playComboBox.Items.AddRange(new string[] 
             {
                 "Goal", "Foul", "Red Card", "Yellow Card", "Substitution",
                 "Goal Kick", "Throw In", "Corner", "Offside", "Free Throw", "Penalty"
             });
+            timer1.Interval = 1000; 
+            timer1.Start(); 
         }
 
         private void team1Check_CheckedChanged(object sender, EventArgs e)
@@ -130,6 +135,13 @@ namespace WindowsFormsApplication1
             {
                 auxComboBox.Items.Add(p.Name);
             }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+           currentTime = System.DateTime.Now; 
+           actualTime = currentTime.Subtract(game.GameTime);
+           time.Text = actualTime.Minutes + ":" + actualTime.Seconds;  
         }
 
 
