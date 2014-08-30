@@ -26,6 +26,12 @@ namespace WindowsFormsApplication1
 
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             InitializeComponent();
+
+
+            Team1Players.ReadOnly = true;
+            Team1Players.BackColor = System.Drawing.SystemColors.Window;
+            Team2Players.ReadOnly = true;
+            Team2Players.BackColor = System.Drawing.SystemColors.Window;
             
             cnb = new SqlConnectionStringBuilder(Properties.Settings.Default.SoccerFeedConnectionString);
             cnb.MaxPoolSize = 2;

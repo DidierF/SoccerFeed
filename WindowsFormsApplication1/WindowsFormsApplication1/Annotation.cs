@@ -84,7 +84,7 @@ namespace WindowsFormsApplication1
             this.time = time;
             this.player = player;
             this.auxPlayer = auxplayer;
-            this.motive = motive;
+            this.motive = motive + 1;
             this.id = new DataBaseInterface().GetNewAnnotationID(); 
         }
 
@@ -97,22 +97,22 @@ namespace WindowsFormsApplication1
                 case 1:
                     if (auxPlayer != null)
                     {
-                        result = "[" + time + "] " + player + " scored a" + Motive + "assisted by " + auxPlayer;
+                        result = "[" + time + "] " + player.Name + " scored a " + Motive + " assisted by " + auxPlayer.Name;
                     }
                     else
                     {
-                        result = "[" + time + "] " + player + " scored a " + Motive;
+                        result = "[" + time + "] " + player.Name + " scored a " + Motive;
                     }
                     break; 
                 case 2:
-                    result = "[" + time + "] " + player + " performed a" + Motive + "to " + auxPlayer;
+                    result = "[" + time + "] " + player.Name + " performed a " + Motive + " to " + auxPlayer.Name;
                     break; 
                 case 3:
                 case 4:
-                    result = "[" + time + "] " + player + " received a " + Motive;
+                    result = "[" + time + "] " + player.Name + " received a " + Motive;
                     break; 
                 case 5: 
-                    result = "[" + time + "]" + player + " was replaced by " + auxPlayer;
+                    result = "[" + time + "]" + player.Name + " was replaced by " + auxPlayer.Name;
                     break; 
                 case 6:
                 case 7:
@@ -120,7 +120,7 @@ namespace WindowsFormsApplication1
                 case 9: 
                 case 10: 
                 case 11: 
-                    result = "[" + time + "] " + player + " performed a " + Motive;
+                    result = "[" + time + "] " + player.Name + " performed a " + Motive;
                     break; 
 
 

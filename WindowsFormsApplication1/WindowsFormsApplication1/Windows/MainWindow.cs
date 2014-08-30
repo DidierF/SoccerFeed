@@ -30,6 +30,8 @@ namespace WindowsFormsApplication1
             InitializeComponent();
             ///Sets the window not resizable.
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            annotationHistory.ReadOnly = true;
+            annotationHistory.BackColor = System.Drawing.SystemColors.Window;
             this.Game = gm;
             team1Check.Text = game.homeTeam().Name;
             team2Check.Text = game.awayTeam().Name;
@@ -73,15 +75,18 @@ namespace WindowsFormsApplication1
         {
             DateTime currentTime = game.GameTime.Add(actualTime); 
             int motive = playComboBox.SelectedIndex;
-
+            Annotation ann = new Annotation(currentTime, this.mainPlayer, this.auxPlayer, annotationMotive);
             if(auxComboBox.Enabled)
             {
-                game.addAnnotation(new Annotation(currentTime, this.mainPlayer, this.auxPlayer, annotationMotive)); 
+                game.addAnnotation(ann); 
             }
             else
             {
-                game.addAnnotation(new Annotation(currentTime, this.mainPlayer, annotationMotive)); 
+                game.addAnnotation(ann); 
             }
+
+            annotationHistory.AppendText(ann.ToString() + "\n");
+            annotationHistory.Update();
         }
 
         private void playComboBox_SelectedIndexChanged(object sender, EventArgs e)

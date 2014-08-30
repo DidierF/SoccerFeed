@@ -374,7 +374,7 @@ namespace WindowsFormsApplication1
                 SqlCommand command = new SqlCommand();
                 command.Connection = connection;
                 command.CommandType = CommandType.Text;
-                command.CommandText = "select count(gameID) from game";
+                command.CommandText = "select count(ID) from Annotation";
 
                 connection.Open();
                 annotations = (int)command.ExecuteScalar();
