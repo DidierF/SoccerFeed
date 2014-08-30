@@ -149,24 +149,6 @@ namespace WindowsFormsApplication1
                 auxComboBox.Items.Add(p.Name);
             }
             annotationMotive = playCB.SelectedIndex;
-            if(team1Check.Checked)
-            {
-                this.mainPlayer = game.homeTeam().InGamePlayers[playerComboBox.SelectedIndex];
-                //try
-                //{
-                    //this.auxPlayer = game.awayTeam().AvailablePlayers()[auxComboBox.SelectedIndex];
-                //}
-                //catch { }
-            }
-            else
-            {
-                this.mainPlayer = game.awayTeam().InGamePlayers[playerComboBox.SelectedIndex];
-                //try
-                //{
-                    //this.auxPlayer = game.homeTeam().AvailablePlayers()[auxComboBox.SelectedIndex]; 
-                //}
-                //catch { }
-            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -186,6 +168,18 @@ namespace WindowsFormsApplication1
             else
             {
                 this.auxPlayer = game.homeTeam().AvailablePlayers()[auxCB.SelectedIndex];
+            }
+        }
+
+        private void playerComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (team1Check.Checked)
+            {
+                this.mainPlayer = game.homeTeam().InGamePlayers[playerComboBox.SelectedIndex];
+            }
+            else
+            {
+                this.mainPlayer = game.awayTeam().InGamePlayers[playerComboBox.SelectedIndex];
             }
         }
 

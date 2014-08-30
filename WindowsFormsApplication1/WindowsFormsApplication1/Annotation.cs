@@ -9,9 +9,6 @@ namespace WindowsFormsApplication1
 {
     public class Annotation
     {
-        //TODO: Finish writing possible motives.
-        //TODO: Add  toString method.
-        //TODO: Revisar el string de anotaciones. 
         /// <summary>
         /// Annotation Motives.
         /// </summary>
