@@ -66,7 +66,7 @@ namespace WindowsFormsApplication1
                     case 11:
                         return "Penalty";
                     default:
-                        return "";
+                        return "Default";
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace WindowsFormsApplication1
         {
             this.time = time;
             this.player = player;
-            this.motive = motive;
+            this.motive = motive + 1;
             this.id = new DataBaseInterface().GetNewAnnotationID();  
         }
 
@@ -125,7 +125,6 @@ namespace WindowsFormsApplication1
 
 
             }
-            //TODO
             return result;
         }
 

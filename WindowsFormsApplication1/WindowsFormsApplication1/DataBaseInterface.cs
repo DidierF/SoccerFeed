@@ -13,7 +13,6 @@ namespace WindowsFormsApplication1
     /// </summary>
     public class DataBaseInterface
     {
-        //TODO: Save/Get Annotation
 
         SqlConnectionStringBuilder csb = new SqlConnectionStringBuilder(Properties.Settings.Default.SoccerFeedConnectionString);
 
@@ -51,7 +50,10 @@ namespace WindowsFormsApplication1
                     {
                         teamName = RemoveSpaces(String.Format("{0}", reader[0]));
                         teams.Add(new Team(teamName, RemoveSpaces(String.Format("{0}", reader[1]))));
-                        command2.CommandText = "select * from player where TeamName = '" + teamName + "'";
+                        command2.CommandText = "select * from player where TeamName = @team";
+                        command2.Parameters.Clear();
+                        command2.Parameters.AddWithValue("@team", teamName);
+
                         reader2 = command2.ExecuteReader();
                         p = new List<Player>();
                         if (reader2.HasRows)
@@ -105,7 +107,13 @@ namespace WindowsFormsApplication1
                 SqlCommand command = new SqlCommand();
                 command.Connection = connection;
                 command.CommandType = CommandType.Text;
-                command.CommandText = "insert into Game value (" + ID + ", " + stadium + ", " + time + ")" ;
+                command.CommandText = "insert Game (GameID, Stadium, Date) values (@ID, @stadium, @time)" ;
+                command.Parameters.Clear();
+                command.Parameters.AddWithValue("@ID", gm.ID);
+                command.Parameters.AddWithValue("@stadium", gm.homeTeam().Stadium);
+                command.Parameters.AddWithValue("@time", gm.GameTime);
+                command.Parameters.AddWithValue("@homeTeam", gm.homeTeam().Name);
+                command.Parameters.AddWithValue("@awayTeam", gm.awayTeam().Name);
 
                 connection.Open();
                 
@@ -114,13 +122,13 @@ namespace WindowsFormsApplication1
                 connection.Close();
                 connection.Open();
                 
-                command.CommandText = "insert into GameTeam value (" + gm.ID + ", " + gm.homeTeam().Name + ")";
+                command.CommandText = "insert GameTeam (GameID, TeamName) values (@ID, @homeTeam)";
                 command.ExecuteNonQuery();
 
                 connection.Close();
                 connection.Open();
 
-                command.CommandText = "insert into GameTeam value (" + gm.ID + ", " + gm.awayTeam().Name + ")";
+                command.CommandText = "insert GameTeam (GameID, TeamName) values (@ID, @awayTeam)";
                 command.ExecuteNonQuery();
                 
             }
@@ -159,7 +167,9 @@ namespace WindowsFormsApplication1
 
                         Int32.TryParse(String.Format("{0}", idReader[0]), out id);
 
-                        TeamsCommand.CommandText = "select * from GameTeam where GameID = " + id.ToString();
+                        TeamsCommand.Parameters.Clear();
+                        TeamsCommand.Parameters.AddWithValue("@id", id.ToString());
+                        TeamsCommand.CommandText = "select * from GameTeam where GameID = @id";
                         teamsReader = TeamsCommand.ExecuteReader();
 
                         GetGameTeams(gameTeams, teamsReader);
@@ -190,8 +200,9 @@ namespace WindowsFormsApplication1
                 SqlCommand cmd2 = new SqlCommand();
                 cmd2.Connection = connection;
                 cmd2.CommandType = CommandType.Text;
-                cmd2.CommandText = "select * from GameTeam where GameID = " + gameID;
-
+                cmd2.CommandText = "select * from GameTeam where GameID = @gameID";
+                cmd2.Parameters.Clear();
+                cmd2.Parameters.AddWithValue("@gameID", gameID);
                 //Not sure if needed
                 //SqlDataReader rdr1 = cmd.ExecuteReader();
                 //if (rdr1.HasRows)
@@ -256,20 +267,40 @@ namespace WindowsFormsApplication1
 
             using (connection)
             {
-                connection.Open(); 
-                string query = "insert into annotation (ID, Motive, Time, Game, MainPlayerID, AuxPlayerID)" +  
-                "value (" + n.ID + "," + n.Motive + "," + n.Time + "," + g.ID +"," + n.Player + ","  + n.AuxPlayer + ")";
+                connection.Open();
+                string query;
+                if (n.AuxPlayer != null)
+                {
+                    query = "insert annotation (ID, Motive, Time, Game, MainPlayerID, AuxPlayerID)" +  
+                        "values (@ID, @Motive, @date, @gameID, @playerID, @auxPlayerID)";
+                }
+                else
+                {
+                    query = "insert annotation (ID, Motive, Time, Game, MainPlayerID)"
+                    + "values (@ID, @Motive, @date, @gameID, @playerID)";
+                }
+                
                 SqlCommand cmd = new SqlCommand(query, connection);
                 cmd.CommandType = CommandType.Text;
-
+                
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@ID", n.ID);
+                cmd.Parameters.AddWithValue("@Motive", n.Motive);
+                cmd.Parameters.AddWithValue("@date", n.Time.ToString());
+                cmd.Parameters.AddWithValue("@gameID", g.ID);
+                cmd.Parameters.AddWithValue("@playerID", n.Player.ID);
+                if (n.AuxPlayer != null)
+                {
+                    cmd.Parameters.AddWithValue("@auxPlayerID", n.AuxPlayer.ID);
+                }
+                
                 cmd.ExecuteNonQuery();
-
 
             }
 
         }
 
-        public List<Annotation> GetAnnotations(Game gm) //Not Implemented
+        public List<Annotation> GetAnnotations(Game gm)
         {
             List<Annotation> annotations = new List<Annotation>();
 
@@ -277,14 +308,19 @@ namespace WindowsFormsApplication1
 
             using(connection)
             {
-                string query = "select * from Annotation where GameID = " + gm.ID;
+                string query = "select * from Annotation where GameID = @gameID";
                 
+
                 SqlCommand cmd = new SqlCommand(query, connection);
                 cmd.CommandType = CommandType.Text;
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@gameID", gm.ID);
 
                 SqlCommand playerCmd = new SqlCommand();
                 playerCmd.Connection = connection;
                 playerCmd.CommandType = CommandType.Text;
+
+                playerCmd.CommandText = "select * from player where ID = @id";
 
                 SqlDataReader rdr = cmd.ExecuteReader();
                 SqlDataReader playerRdr;
@@ -294,9 +330,8 @@ namespace WindowsFormsApplication1
                     while (rdr.Read())
                     {
                         time = rdr.GetDateTime(3);
-                        //TODO: Get the annotation motive as string.
-
-                        playerCmd.CommandText = "select * from player where ID = " + rdr.GetInt32(5);
+                        playerCmd.Parameters.Clear();
+                        playerCmd.Parameters.AddWithValue("@id", rdr.GetInt32(5));
                         playerRdr = playerCmd.ExecuteReader();
                         
                         int motive = GetMotiveInt(RemoveSpaces(string.Format("{0}", rdr[1])));

@@ -75,6 +75,7 @@ namespace WindowsFormsApplication1
             this.auxComboBox.Name = "auxComboBox";
             this.auxComboBox.Size = new System.Drawing.Size(179, 21);
             this.auxComboBox.TabIndex = 8;
+            this.auxComboBox.SelectedIndexChanged += new System.EventHandler(this.auxComboBox_SelectedIndexChanged);
             // 
             // time
             // 

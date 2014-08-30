@@ -71,25 +71,24 @@ namespace WindowsFormsApplication1
 
         private void insertBtn_Click(object sender, EventArgs e)
         {
-            DateTime currentTime = new DateTime(); 
-            int motive = playerComboBox.SelectedIndex;
+            DateTime currentTime = game.GameTime.Add(actualTime); 
+            int motive = playComboBox.SelectedIndex;
 
-            if(auxComboBox.Enabled == true)
+            if(auxComboBox.Enabled)
             {
-                game.addAnnotation(new Annotation(currentTime.Add(actualTime), this.mainPlayer, this.auxPlayer, annotationMotive)); 
+                game.addAnnotation(new Annotation(currentTime, this.mainPlayer, this.auxPlayer, annotationMotive)); 
             }
             else
             {
-                game.addAnnotation(new Annotation(currentTime.Add(actualTime), this.mainPlayer, annotationMotive)); 
+                game.addAnnotation(new Annotation(currentTime, this.mainPlayer, annotationMotive)); 
             }
-            //game.addAnnotation(new Annotation(time, player, motive));
         }
 
         private void playComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ComboBox cb = (ComboBox)sender;
+            ComboBox playCB = (ComboBox)sender;
             List<Player> players = new List<Player>();
-            switch (cb.SelectedIndex)
+            switch (playCB.SelectedIndex)
             {
                 case 2:
                 case 3:
@@ -144,24 +143,24 @@ namespace WindowsFormsApplication1
             {
                 auxComboBox.Items.Add(p.Name);
             }
-            annotationMotive = cb.SelectedIndex;
+            annotationMotive = playCB.SelectedIndex;
             if(team1Check.Checked)
             {
-                this.mainPlayer = game.homeTeam().AvailablePlayers()[playerComboBox.SelectedIndex];
-                try
-                {
-                    this.auxPlayer = game.awayTeam().AvailablePlayers()[auxComboBox.SelectedIndex];
-                }
-                catch { }
+                this.mainPlayer = game.homeTeam().InGamePlayers[playerComboBox.SelectedIndex];
+                //try
+                //{
+                    //this.auxPlayer = game.awayTeam().AvailablePlayers()[auxComboBox.SelectedIndex];
+                //}
+                //catch { }
             }
             else
             {
-                this.mainPlayer = game.awayTeam().AvailablePlayers()[playerComboBox.SelectedIndex];
-                try
-                {
-                    this.auxPlayer = game.homeTeam().AvailablePlayers()[auxComboBox.SelectedIndex]; 
-                }
-                catch { }
+                this.mainPlayer = game.awayTeam().InGamePlayers[playerComboBox.SelectedIndex];
+                //try
+                //{
+                    //this.auxPlayer = game.homeTeam().AvailablePlayers()[auxComboBox.SelectedIndex]; 
+                //}
+                //catch { }
             }
         }
 
@@ -170,6 +169,19 @@ namespace WindowsFormsApplication1
            currentTime = System.DateTime.Now; 
            actualTime = currentTime.Subtract(game.GameTime);
            time.Text = actualTime.Minutes + ":" + actualTime.Seconds;  
+        }
+
+        private void auxComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox auxCB = (ComboBox)sender;
+            if (team1Check.Checked)
+            {
+                this.auxPlayer = game.awayTeam().AvailablePlayers()[auxCB.SelectedIndex];
+            }
+            else
+            {
+                this.auxPlayer = game.homeTeam().AvailablePlayers()[auxCB.SelectedIndex];
+            }
         }
 
 

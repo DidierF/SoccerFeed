@@ -18,7 +18,8 @@ namespace WindowsFormsApplication1
         //private DataBaseInterface dbI;
         private SqlConnectionStringBuilder cnb;
         public Game NewGame { get { return newGame; } }
-        
+        DataBaseInterface dbi = new DataBaseInterface();
+
         public StartWindow()
         {
             //TODO: Open and Save Buttons
@@ -102,6 +103,7 @@ namespace WindowsFormsApplication1
             newGame = new Game(new DataBaseInterface().GetNewGameID(),playingTeams[0], playingTeams[1]);
             if (playingTeams[0] != null && playingTeams[1] != null && playingTeams[0] != playingTeams[1])
             {
+                dbi.SaveGame(newGame);
                 this.DialogResult = DialogResult.OK;
             }
         }
