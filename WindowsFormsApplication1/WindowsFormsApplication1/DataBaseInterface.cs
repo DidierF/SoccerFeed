@@ -111,7 +111,7 @@ namespace WindowsFormsApplication1
                 command.Parameters.Clear();
                 command.Parameters.AddWithValue("@ID", gm.ID);
                 command.Parameters.AddWithValue("@stadium", gm.homeTeam().Stadium);
-                command.Parameters.AddWithValue("@time", gm.GameTime);
+                command.Parameters.AddWithValue("@time", gm.GameTime.ToString());
                 command.Parameters.AddWithValue("@homeTeam", gm.homeTeam().Name);
                 command.Parameters.AddWithValue("@awayTeam", gm.awayTeam().Name);
 
@@ -191,26 +191,12 @@ namespace WindowsFormsApplication1
             Team[] t = new Team[2];
             using(connection)
             {
-                //Not sure if needed
-                //SqlCommand cmd = new SqlCommand();
-                //cmd.Connection = connection;
-                //cmd.CommandType = CommandType.Text;
-                //cmd.CommandText = "select * from Game where GameID = " + gameID;
-
                 SqlCommand cmd2 = new SqlCommand();
                 cmd2.Connection = connection;
                 cmd2.CommandType = CommandType.Text;
                 cmd2.CommandText = "select * from GameTeam where GameID = @gameID";
                 cmd2.Parameters.Clear();
                 cmd2.Parameters.AddWithValue("@gameID", gameID);
-                //Not sure if needed
-                //SqlDataReader rdr1 = cmd.ExecuteReader();
-                //if (rdr1.HasRows)
-                //{
-                    
-                //}
-                //rdr1.Close();
-                
 
                 SqlDataReader rdr2 = cmd2.ExecuteReader();
                 GetGameTeams(t, rdr2);
@@ -271,13 +257,13 @@ namespace WindowsFormsApplication1
                 string query;
                 if (n.AuxPlayer != null)
                 {
-                    query = "insert annotation (ID, Motive, Time, Game, MainPlayerID, AuxPlayerID)" +  
+                    query = "insert annotation (ID, Motive, Time, Game, MainPlayerID, AuxPlayerID)" +
                         "values (@ID, @Motive, @date, @gameID, @playerID, @auxPlayerID)";
                 }
                 else
                 {
                     query = "insert annotation (ID, Motive, Time, Game, MainPlayerID)"
-                    + "values (@ID, @Motive, @date, @gameID, @playerID)";
+                    + "values (@ID, @Motive, convert(datetime, @date, 103), @gameID, @playerID)";
                 }
                 
                 SqlCommand cmd = new SqlCommand(query, connection);
@@ -286,7 +272,7 @@ namespace WindowsFormsApplication1
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@ID", n.ID);
                 cmd.Parameters.AddWithValue("@Motive", n.Motive);
-                cmd.Parameters.AddWithValue("@date", n.Time.ToString());
+                cmd.Parameters.AddWithValue("@date", n.Time.ToString("dd/MM/yyyy hh:mm:ss tt"));
                 cmd.Parameters.AddWithValue("@gameID", g.ID);
                 cmd.Parameters.AddWithValue("@playerID", n.Player.ID);
                 if (n.AuxPlayer != null)
