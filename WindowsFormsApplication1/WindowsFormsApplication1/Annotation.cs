@@ -12,17 +12,17 @@ namespace WindowsFormsApplication1
         /// <summary>
         /// Annotation Motives.
         /// </summary>
-        public static int GOAL = 1;
-        public static int FOUL = 2;
-        public static int RED_CARD = 3;
-        public static int YELLOW_CARD = 4;
-        public static int SUBSTITUTION = 5;
-        public static int GOAL_KICK = 6;
-        public static int THROW_IN = 7;
-        public static int CORNER = 8;
-        public static int OFFSIDE = 9;
-        public static int FREE_THROW = 10;
-        public static int PENALTY = 11;
+        //public static int GOAL = 0;
+        //public static int FOUL = 0;
+        //public static int RED_CARD = 2;
+        //public static int YELLOW_CARD = 3;
+        //public static int SUBSTITUTION = 4;
+        //public static int GOAL_KICK = 5;
+        //public static int THROW_IN = 6;
+        //public static int CORNER = 7;
+        //public static int OFFSIDE = 8;
+        //public static int FREE_THROW = 9;
+        //public static int PENALTY = 10;
 
         private int id;
         private int motive;
@@ -40,27 +40,27 @@ namespace WindowsFormsApplication1
             {
                 switch (motive)
                 {
-                    case 1:
+                    case 0:
                         return "Goal";
-                    case 2:
+                    case 1:
                         return "Foul";
-                    case 3:
+                    case 2:
                         return "Red Card";
-                    case 4:
+                    case 3:
                         return "Yellow Card";
-                    case 5:
+                    case 4:
                         return "Substitution";
-                    case 6:
+                    case 5:
                         return "Goal Kick";
-                    case 7:
+                    case 6:
                         return "Throw In";
-                    case 8:
+                    case 7:
                         return "Corner";
-                    case 9:
+                    case 8:
                         return "Offside";
-                    case 10:
+                    case 9:
                         return "Free Throw";
-                    case 11:
+                    case 10:
                         return "Penalty";
                     default:
                         return "Default";
@@ -68,21 +68,21 @@ namespace WindowsFormsApplication1
             }
         }
 
-        public Annotation(DateTime time, Player player, int motive)
+        public Annotation(DateTime time, Player player, int motive, int id)
         {
             this.time = time;
             this.player = player;
-            this.motive = motive + 1;
-            this.id = new DataBaseInterface().GetNewAnnotationID();  
+            this.motive = motive;
+            this.id = id;
         }
 
-        public Annotation(DateTime time, Player player, Player auxplayer, int motive)
+        public Annotation(DateTime time, Player player, Player auxplayer, int motive, int id)
         {
             this.time = time;
             this.player = player;
             this.auxPlayer = auxplayer;
-            this.motive = motive + 1;
-            this.id = new DataBaseInterface().GetNewAnnotationID(); 
+            this.motive = motive;
+            this.id = id;
         }
 
         public override string ToString()
@@ -91,7 +91,7 @@ namespace WindowsFormsApplication1
 
             switch (motive)
             {
-                case 1:
+                case 0:
                     if (auxPlayer != null)
                     {
                         result = "[" + time + "] " + player.Name + " scored a " + Motive + " assisted by " + auxPlayer.Name;
@@ -101,25 +101,27 @@ namespace WindowsFormsApplication1
                         result = "[" + time + "] " + player.Name + " scored a " + Motive;
                     }
                     break; 
-                case 2:
+                case 1:
                     result = "[" + time + "] " + player.Name + " performed a " + Motive + " to " + auxPlayer.Name;
                     break; 
+                case 2:
                 case 3:
-                case 4:
                     result = "[" + time + "] " + player.Name + " received a " + Motive;
                     break; 
-                case 5: 
+                case 4: 
                     result = "[" + time + "]" + player.Name + " was replaced by " + auxPlayer.Name;
                     break; 
+                case 5:
                 case 6:
                 case 7:
                 case 8:
                 case 9: 
-                case 10: 
-                case 11: 
+                case 10:  
                     result = "[" + time + "] " + player.Name + " performed a " + Motive;
                     break; 
-
+                default:
+                    result = "Default motive string";
+                    break;
 
             }
             return result;
@@ -129,9 +131,17 @@ namespace WindowsFormsApplication1
         {
             if (str.Length >= 11)
             {
-                str = new string[] { "Goal", "Foul", "Red Card",
-                    "Yellow Card", "Substitution", "Goal Kick", 
-                    "Throw In", "Corner", "Offside", "Free Throw", "Penalty"};
+                str[0] = "Goal";
+                str[1] = "Foul";
+                str[2] = "Red Card";
+                str[3] = "Yellow Card";
+                str[4] = "Substitution";
+                str[5] = "Goal Kick";
+                str[6] = "Throw In";
+                str[7] = "Corner";
+                str[8] = "Offside";
+                str[9] = "Free Throw";
+                str[10] = "Penalty";
             }
         }
     }

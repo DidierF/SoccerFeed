@@ -9,7 +9,6 @@ namespace WindowsFormsApplication1
         private Game game;
         private DateTime currentTime;
         private TimeSpan actualTime;
-        private Team homeTeam; 
         private Player mainPlayer, auxPlayer; 
         private int annotationMotive; 
 
@@ -42,7 +41,19 @@ namespace WindowsFormsApplication1
                 "Goal Kick", "Throw In", "Corner", "Offside", "Free Throw", "Penalty"
             });
             timer1.Interval = 1000; 
-            timer1.Start(); 
+            timer1.Start();
+            DisplayAnnotatinos(game.ID);
+        }
+
+        private void DisplayAnnotatinos(int p)
+        {
+            List<Annotation> anns = new DataBaseInterface().GetAnnotations(p);
+
+            foreach (Annotation a in anns)
+            {
+                game.addAnnotation(a);
+                annotationHistory.AppendText(a.ToString() + "\n");
+            }
         }
 
         private void team1Check_CheckedChanged(object sender, EventArgs e)
@@ -75,15 +86,11 @@ namespace WindowsFormsApplication1
         {
             DateTime currentTime = game.GameTime.Add(actualTime); 
             int motive = playComboBox.SelectedIndex;
-            Annotation ann = new Annotation(currentTime, this.mainPlayer, this.auxPlayer, annotationMotive);
-            if(auxComboBox.Enabled)
-            {
-                game.addAnnotation(ann); 
-            }
-            else
-            {
-                game.addAnnotation(ann); 
-            }
+            int newID = new DataBaseInterface().GetNewAnnotationID();
+            Annotation ann = new Annotation(currentTime, this.mainPlayer, this.auxPlayer, annotationMotive, newID);
+            
+            game.addAnnotation(ann);
+            new DataBaseInterface().SaveAnnotation(game, ann);
 
             annotationHistory.AppendText(ann.ToString() + "\n");
             annotationHistory.Update();

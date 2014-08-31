@@ -138,7 +138,6 @@ namespace WindowsFormsApplication1
         public List<Game> GetAllGames()
         {
             List<Game> games = new List<Game>();
-            csb.MaxPoolSize = 2;
 
             SqlConnection connection = new SqlConnection(csb.ConnectionString);
 
@@ -150,13 +149,9 @@ namespace WindowsFormsApplication1
                 GameIDCommand.CommandType = CommandType.Text;
                 GameIDCommand.CommandText = "Select * from Game";
 
-                SqlCommand TeamsCommand = new SqlCommand();
-                TeamsCommand.Connection = connection;
-                TeamsCommand.CommandType = CommandType.Text;
 
                 connection.Open();
                 SqlDataReader idReader = GameIDCommand.ExecuteReader();
-                SqlDataReader teamsReader;
 
                 if (idReader.HasRows)
                 {
@@ -167,14 +162,9 @@ namespace WindowsFormsApplication1
 
                         Int32.TryParse(String.Format("{0}", idReader[0]), out id);
 
-                        TeamsCommand.Parameters.Clear();
-                        TeamsCommand.Parameters.AddWithValue("@id", id.ToString());
-                        TeamsCommand.CommandText = "select * from GameTeam where GameID = @id";
-                        teamsReader = TeamsCommand.ExecuteReader();
 
-                        GetGameTeams(gameTeams, teamsReader);
+                        GetGameTeams(gameTeams, id);
                         games.Add(new Game(id, gameTeams[0], gameTeams[1]));
-                        teamsReader.Close();
                     }
                 }
                 idReader.Close();
@@ -191,6 +181,7 @@ namespace WindowsFormsApplication1
             Team[] t = new Team[2];
             using(connection)
             {
+                connection.Open();
                 SqlCommand cmd2 = new SqlCommand();
                 cmd2.Connection = connection;
                 cmd2.CommandType = CommandType.Text;
@@ -199,7 +190,7 @@ namespace WindowsFormsApplication1
                 cmd2.Parameters.AddWithValue("@gameID", gameID);
 
                 SqlDataReader rdr2 = cmd2.ExecuteReader();
-                GetGameTeams(t, rdr2);
+                GetGameTeams(t, gameID);
                 
                 rdr2.Close();
             }
@@ -209,23 +200,42 @@ namespace WindowsFormsApplication1
             return g;
         }
 
-        private void GetGameTeams(Team[] teamsArray, SqlDataReader reader)
+        private void GetGameTeams(Team[] teamsArray, int gameID)
         {
-            if (reader.HasRows)
+            SqlConnection connection = new SqlConnection(csb.ConnectionString);
+            using (connection)
             {
-                int i = 0;
-                List<Team> teams = new List<Team>();
-                while (reader.Read())
-                {
-                    foreach (Team tm in teams)
-                    {
-                        if (tm.Name == RemoveSpaces(String.Format("{0}", reader[0])))
-                        {
-                            teamsArray[i++] = tm;
-                        }
-                    }
+                connection.Open();
 
+                SqlCommand TeamsCommand = new SqlCommand();
+                TeamsCommand.Connection = connection;
+                TeamsCommand.CommandType = CommandType.Text;
+
+                TeamsCommand.Parameters.Clear();
+                TeamsCommand.Parameters.AddWithValue("@id", gameID.ToString());
+                TeamsCommand.CommandText = "select * from GameTeam where GameID = @id";
+
+                SqlDataReader reader = TeamsCommand.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    int i = 0;
+                    List<Team> teams = GetTeams();
+                    while (reader.Read())
+                    {
+
+                        foreach (Team tm in teams)
+                        {
+                            if (tm.Name == RemoveSpaces(String.Format("{0}", reader[1])))
+                            {
+                                teamsArray[i] = tm;
+                                i++;
+                            }
+                        }
+
+                    }
                 }
+                reader.Close();
             }
         }
 
@@ -258,7 +268,7 @@ namespace WindowsFormsApplication1
                 if (n.AuxPlayer != null)
                 {
                     query = "insert annotation (ID, Motive, Time, Game, MainPlayerID, AuxPlayerID)" +
-                        "values (@ID, @Motive, @date, @gameID, @playerID, @auxPlayerID)";
+                        "values (@ID, @Motive, convert(datetime, @date, 103), @gameID, @playerID, @auxPlayerID)";
                 }
                 else
                 {
@@ -286,7 +296,7 @@ namespace WindowsFormsApplication1
 
         }
 
-        public List<Annotation> GetAnnotations(Game gm)
+        public List<Annotation> GetAnnotations(int gmID)
         {
             List<Annotation> annotations = new List<Annotation>();
 
@@ -294,13 +304,13 @@ namespace WindowsFormsApplication1
 
             using(connection)
             {
-                string query = "select * from Annotation where GameID = @gameID";
-                
+                string query = "select * from Annotation where Game = @gameID";
+                connection.Open();
 
                 SqlCommand cmd = new SqlCommand(query, connection);
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@gameID", gm.ID);
+                cmd.Parameters.AddWithValue("@gameID", gmID);
 
                 SqlCommand playerCmd = new SqlCommand();
                 playerCmd.Connection = connection;
@@ -312,19 +322,17 @@ namespace WindowsFormsApplication1
                 SqlDataReader playerRdr;
                 if (rdr.HasRows)
                 {
-                    DateTime time;
                     while (rdr.Read())
                     {
-                        time = rdr.GetDateTime(3);
                         playerCmd.Parameters.Clear();
-                        playerCmd.Parameters.AddWithValue("@id", rdr.GetInt32(5));
+                        playerCmd.Parameters.AddWithValue("@id", rdr.GetInt32(4));
                         playerRdr = playerCmd.ExecuteReader();
+                        playerRdr.Read();
                         
-                        int motive = GetMotiveInt(RemoveSpaces(string.Format("{0}", rdr[1])));
-
-                        annotations.Add(new Annotation(time,
-                            new Player(RemoveSpaces(string.Format("{0}", playerRdr[1])), string.Format("{0}", playerRdr[2]),
-                                RemoveSpaces(string.Format("{0}", playerRdr[3])), playerRdr.GetInt32(0)), motive));
+                        annotations.Add(new Annotation(rdr.GetDateTime(6),
+                            new Player(RemoveSpaces(string.Format("{0}", playerRdr[1])), string.Format("{0}", playerRdr[2]), 
+                                RemoveSpaces(string.Format("{0}", playerRdr[3])), playerRdr.GetInt32(0)), 
+                                GetMotiveInt(RemoveSpaces(string.Format("{0}", rdr[1]))), rdr.GetInt32(0)));
                         playerRdr.Close();
                     }
                 }
@@ -344,7 +352,7 @@ namespace WindowsFormsApplication1
             {
                 if (allMotives[i] == motiveString)
                 {
-                    motiveInt = i + 1;
+                    motiveInt = i;
                 }
             }
 

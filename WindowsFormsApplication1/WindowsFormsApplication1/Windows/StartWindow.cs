@@ -40,8 +40,6 @@ namespace WindowsFormsApplication1
 
             teams = new DataBaseInterface().GetTeams();
 
-            this.home.SelectedIndexChanged += new System.EventHandler(home_SelectedIndexChanged);
-            this.away.SelectedIndexChanged += new System.EventHandler(away_SelectedIndexChanged);
             this.Date.Text = System.DateTime.Now.ToString();
             foreach (Team t in teams)
             {
@@ -110,6 +108,17 @@ namespace WindowsFormsApplication1
             if (playingTeams[0] != null && playingTeams[1] != null && playingTeams[0] != playingTeams[1])
             {
                 dbi.SaveGame(newGame);
+                this.DialogResult = DialogResult.OK;
+            }
+        }
+
+        private void OpenBtn_Click(object sender, EventArgs e)
+        {
+            GameOpenWindow openW = new GameOpenWindow();
+
+            if (openW.ShowDialog() == DialogResult.OK)
+            {
+                newGame = openW.Game;
                 this.DialogResult = DialogResult.OK;
             }
         }

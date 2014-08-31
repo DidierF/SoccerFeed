@@ -47,6 +47,7 @@
             this.OpenBtn.TabIndex = 0;
             this.OpenBtn.Text = "Open";
             this.OpenBtn.UseVisualStyleBackColor = true;
+            this.OpenBtn.Click += new System.EventHandler(this.OpenBtn_Click);
             // 
             // SaveBtn
             // 
