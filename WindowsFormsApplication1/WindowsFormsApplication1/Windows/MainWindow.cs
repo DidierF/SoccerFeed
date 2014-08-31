@@ -40,6 +40,8 @@ namespace WindowsFormsApplication1
                 "Goal", "Foul", "Red Card", "Yellow Card", "Substitution",
                 "Goal Kick", "Throw In", "Corner", "Offside", "Free Throw", "Penalty"
             });
+            annotationHistory.AppendText("[" + System.DateTime.Now + "] " + "Game Start");
+            annotationHistory.Update(); 
             timer1.Interval = 1000; 
             timer1.Start();
             DisplayAnnotatinos(game.ID);

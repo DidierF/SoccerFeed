@@ -111,7 +111,7 @@ namespace WindowsFormsApplication1
                 command.Parameters.Clear();
                 command.Parameters.AddWithValue("@ID", gm.ID);
                 command.Parameters.AddWithValue("@stadium", gm.homeTeam().Stadium);
-                command.Parameters.AddWithValue("@time", gm.GameTime.ToString());
+                command.Parameters.AddWithValue("@time", gm.GameTime.ToString("h:mm:ss"));
                 command.Parameters.AddWithValue("@homeTeam", gm.homeTeam().Name);
                 command.Parameters.AddWithValue("@awayTeam", gm.awayTeam().Name);
 
@@ -282,7 +282,7 @@ namespace WindowsFormsApplication1
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@ID", n.ID);
                 cmd.Parameters.AddWithValue("@Motive", n.Motive);
-                cmd.Parameters.AddWithValue("@date", n.Time.ToString("dd/MM/yyyy hh:mm:ss tt"));
+                cmd.Parameters.AddWithValue("@date", n.Time.ToString("hh:mm:ss"));
                 cmd.Parameters.AddWithValue("@gameID", g.ID);
                 cmd.Parameters.AddWithValue("@playerID", n.Player.ID);
                 if (n.AuxPlayer != null)
