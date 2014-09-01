@@ -19,8 +19,11 @@ namespace WindowsFormsApplication1
         //Game starting time.
         private DateTime startTime;
 
+        private int[] score = new int[] { 0, 0 };
+
         public int ID { get { return id; } }
         public DateTime GameTime { get { return startTime; } }
+        public int[] Score { get { return score; } }
 
         public Game(int id, Team t1, Team t2)
         {
@@ -33,6 +36,37 @@ namespace WindowsFormsApplication1
         public void addAnnotation(Annotation an)
         {
             annotations.Add(an);
+            if (an.Motive == "Goal")
+            {
+                Team t = getPlayersTeam(an.Player);
+                if (t.Name == teams[0].Name)
+                {
+                    score[0]++;
+                }
+                else if (t.Name == teams[1].Name)
+                {
+                    score[1]++;
+                }
+            }
+        }
+
+        private Team getPlayersTeam(Player player)
+        {
+            Team team = null;
+            bool found = false;
+            foreach (Team t in teams)
+            {
+                foreach (Player p in t.Members)
+                {
+                    if (p.ID == player.ID)
+                    {
+                        team = t;
+                    }
+                    if (found) break;
+                }
+                if (found) break;
+            }
+            return team;
         }
 
         public Team homeTeam()

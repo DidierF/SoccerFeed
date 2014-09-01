@@ -74,10 +74,10 @@
   <ItemGroup>
     <Compile Include="Annotation.cs" />
     <Compile Include="DataBaseInterface.cs" />
-    <Compile Include="GameOpenWindow.cs">
+    <Compile Include="Windows\GameOpenWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GameOpenWindow.Designer.cs">
+    <Compile Include="Windows\GameOpenWindow.Designer.cs">
       <DependentUpon>GameOpenWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="SoccerFeedDataSet.Designer.cs">
@@ -108,7 +108,7 @@
       <DependentUpon>StartWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Team.cs" />
-    <EmbeddedResource Include="GameOpenWindow.resx">
+    <EmbeddedResource Include="Windows\GameOpenWindow.resx">
       <DependentUpon>GameOpenWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\AuxWindow.resx">

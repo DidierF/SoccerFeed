@@ -31,8 +31,11 @@ namespace WindowsFormsApplication1
 
         private void loadBtn_Click(object sender, EventArgs e)
         {
-            game = new DataBaseInterface().GetGame(gamesList.SelectedIndex);
-            this.DialogResult = DialogResult.OK;
+            if (gamesList.SelectedItem != null)
+            {
+                game = new DataBaseInterface().GetGame(gamesList.SelectedIndex);
+                this.DialogResult = DialogResult.OK; 
+            }
         }
     }
 }
