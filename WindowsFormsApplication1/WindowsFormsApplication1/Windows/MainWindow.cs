@@ -86,28 +86,31 @@ namespace WindowsFormsApplication1
 
         private void insertBtn_Click(object sender, EventArgs e)
         {
-            DateTime currentTime = game.GameTime.Add(actualTime);
-            int motive = playComboBox.SelectedIndex;
-            int newID = new DataBaseInterface().GetNewAnnotationID();
-            Annotation ann = new Annotation(currentTime, this.mainPlayer, this.auxPlayer, annotationMotive, newID);
-
-            game.addAnnotation(ann);
-            new DataBaseInterface().SaveAnnotation(game, ann);
-
-            annotationHistory.AppendText(ann.ToString() + "\n");
-            annotationHistory.Update();
-
-            if (annotationMotive == 4)
+            if (!(playerComboBox.SelectedItem == null || playComboBox.SelectedItem == null) && !(auxComboBox.Enabled && auxComboBox.SelectedItem == null))
             {
-                substitution(); 
+                DateTime currentTime = game.GameTime.Add(actualTime);
+                int motive = playComboBox.SelectedIndex;
+                int newID = new DataBaseInterface().GetNewAnnotationID();
+                Annotation ann = new Annotation(currentTime, this.mainPlayer, this.auxPlayer, annotationMotive, newID);
+
+                game.addAnnotation(ann);
+                new DataBaseInterface().SaveAnnotation(game, ann);
+
+                annotationHistory.AppendText(ann.ToString() + "\n");
+                annotationHistory.Update();
+
+                if (annotationMotive == 4)
+                {
+                    substitution();
+                }
+                playerComboBox.ResetText();
+                playComboBox.ResetText();
+                auxComboBox.ResetText();
+                mainPlayer = null;
+                annotationMotive = '0';
+                auxPlayer = null;
+                auxComboBox.Enabled = false;  
             }
-            playerComboBox.ResetText();
-            playComboBox.ResetText();
-            auxComboBox.ResetText();
-            mainPlayer = null;
-            annotationMotive = '0';
-            auxPlayer = null;
-            auxComboBox.Enabled = false; 
 
         }
 
