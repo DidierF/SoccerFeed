@@ -101,7 +101,8 @@ namespace WindowsFormsApplication1
 
         private void insertBtn_Click(object sender, EventArgs e)
         {
-            if (!(playerComboBox.SelectedItem == null || playComboBox.SelectedItem == null) && !(auxComboBox.Enabled && auxComboBox.SelectedItem == null) && playComboBox.SelectedIndex == 0)
+            if (!(playerComboBox.SelectedItem == null || playComboBox.SelectedItem == null) && 
+                !(auxComboBox.Enabled && auxComboBox.SelectedItem == null && playComboBox.SelectedIndex != 0))
             {
             DateTime currentTime = game.GameTime.Add(actualTime);
             int motive = playComboBox.SelectedIndex;
