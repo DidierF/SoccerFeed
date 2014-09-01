@@ -312,28 +312,24 @@ namespace WindowsFormsApplication1
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@gameID", gmID);
 
-                SqlCommand playerCmd = new SqlCommand();
-                playerCmd.Connection = connection;
-                playerCmd.CommandType = CommandType.Text;
-
-                playerCmd.CommandText = "select * from player where ID = @id";
-
                 SqlDataReader rdr = cmd.ExecuteReader();
-                SqlDataReader playerRdr;
+
+                
                 if (rdr.HasRows)
                 {
                     while (rdr.Read())
                     {
-                        playerCmd.Parameters.Clear();
-                        playerCmd.Parameters.AddWithValue("@id", rdr.GetInt32(4));
-                        playerRdr = playerCmd.ExecuteReader();
-                        playerRdr.Read();
-                        
-                        annotations.Add(new Annotation(rdr.GetDateTime(6),
-                            new Player(RemoveSpaces(string.Format("{0}", playerRdr[1])), string.Format("{0}", playerRdr[2]), 
-                                RemoveSpaces(string.Format("{0}", playerRdr[3])), playerRdr.GetInt32(0)), 
+                        if (rdr.IsDBNull(5))
+                        {
+                            annotations.Add(new Annotation(rdr.GetDateTime(6), getPlayer(rdr.GetInt32(4)),
                                 GetMotiveInt(RemoveSpaces(string.Format("{0}", rdr[1]))), rdr.GetInt32(0)));
-                        playerRdr.Close();
+                        }
+                        else
+                        {
+                            annotations.Add(new Annotation(rdr.GetDateTime(6), getPlayer(rdr.GetInt32(4)), getPlayer(rdr.GetInt32(5)),
+                                GetMotiveInt(RemoveSpaces(string.Format("{0}", rdr[1]))), rdr.GetInt32(0)));
+                        }
+                        
                     }
                 }
                 rdr.Close();
@@ -377,5 +373,29 @@ namespace WindowsFormsApplication1
             return annotations;
         }
 
+        private Player getPlayer(int id)
+        {
+            Player p = null;
+            SqlConnection connection = new SqlConnection(csb.ConnectionString);
+
+            using (connection)
+            {
+                connection.Open();
+                SqlCommand cmd = new SqlCommand("select * from player where ID = @id", connection);
+                cmd.Parameters.AddWithValue("@id", id);
+                cmd.CommandType = CommandType.Text;
+
+                SqlDataReader rdr = cmd.ExecuteReader();
+
+                if (rdr.HasRows)
+                {
+                    rdr.Read();
+                    p = new Player(RemoveSpaces(string.Format("{0}", rdr[1])), string.Format("{0}", rdr[2]),
+                                    RemoveSpaces(string.Format("{0}", rdr[3])), rdr.GetInt32(0));
+                } 
+            }
+
+            return p;
+        }
     }
 }

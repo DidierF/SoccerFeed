@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.OpenBtn = new System.Windows.Forms.Button();
-            this.SaveBtn = new System.Windows.Forms.Button();
             this.home = new System.Windows.Forms.ComboBox();
             this.away = new System.Windows.Forms.ComboBox();
             this.Team1Players = new System.Windows.Forms.TextBox();
@@ -48,15 +47,6 @@
             this.OpenBtn.Text = "Open";
             this.OpenBtn.UseVisualStyleBackColor = true;
             this.OpenBtn.Click += new System.EventHandler(this.OpenBtn_Click);
-            // 
-            // SaveBtn
-            // 
-            this.SaveBtn.Location = new System.Drawing.Point(13, 43);
-            this.SaveBtn.Name = "SaveBtn";
-            this.SaveBtn.Size = new System.Drawing.Size(75, 23);
-            this.SaveBtn.TabIndex = 1;
-            this.SaveBtn.Text = "Save";
-            this.SaveBtn.UseVisualStyleBackColor = true;
             // 
             // home
             // 
@@ -136,7 +126,6 @@
             this.Controls.Add(this.Team1Players);
             this.Controls.Add(this.away);
             this.Controls.Add(this.home);
-            this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.OpenBtn);
             this.Name = "StartWindow";
             this.Text = "StartWindow";
@@ -148,7 +137,6 @@
         #endregion
 
         private System.Windows.Forms.Button OpenBtn;
-        private System.Windows.Forms.Button SaveBtn;
         private System.Windows.Forms.ComboBox home;
         private System.Windows.Forms.ComboBox away;
         private System.Windows.Forms.TextBox Team1Players;
