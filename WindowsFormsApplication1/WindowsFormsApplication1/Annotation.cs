@@ -9,21 +9,6 @@ namespace WindowsFormsApplication1
 {
     public class Annotation
     {
-        /// <summary>
-        /// Annotation Motives.
-        /// </summary>
-        //public static int GOAL = 0;
-        //public static int FOUL = 0;
-        //public static int RED_CARD = 2;
-        //public static int YELLOW_CARD = 3;
-        //public static int SUBSTITUTION = 4;
-        //public static int GOAL_KICK = 5;
-        //public static int THROW_IN = 6;
-        //public static int CORNER = 7;
-        //public static int OFFSIDE = 8;
-        //public static int FREE_THROW = 9;
-        //public static int PENALTY = 10;
-
         private int id;
         private int motive;
         private Player player;
@@ -87,31 +72,30 @@ namespace WindowsFormsApplication1
 
         public override string ToString()
         {
-            string result = "";
-
+            string result = "[" + time +"] ";
             switch (motive)
             {
                 case 0:
                     if (auxPlayer != null)
                     {
-                        result = "[" + time + "] " + player.Name + " scored a " + Motive + " assisted by " + auxPlayer.Name;
+                        result += player.Name + " scored a " + Motive + " assisted by " + auxPlayer.Name;
                     }
                     else
                     {
-                        result = "[" + time + "] " + player.Name + " scored a " + Motive;
+                        result += player.Name + " scored a " + Motive;
                     }
                     break; 
                 case 1:
-                    result = "[" + time + "] " + player.Name + " performed a " + Motive + " to " + auxPlayer.Name;
+                    result += player.Name + " performed a " + Motive + " to " + auxPlayer.Name;
                     break; 
                 case 2:
                 case 3:
-                    result = "[" + time + "] " + player.Name + " received a " + Motive;
+                    result += player.Name + " received a " + Motive;
                     break; 
                 case 4:
                     if (auxPlayer != null)
                     {
-                        result = "[" + time + "]" + player.Name + " was replaced by " + auxPlayer.Name;
+                        result += player.Name + " was replaced by " + auxPlayer.Name;
                     }
                     break; 
                 case 5:
@@ -120,13 +104,11 @@ namespace WindowsFormsApplication1
                 case 8:
                 case 9: 
                 case 10:  
-                    result = "[" + time + "] " + player.Name + " performed a " + Motive;
-                    break; 
-                default:
-                    result = "Default motive string";
+                    result += player.Name + " performed a " + Motive;
                     break;
 
             }
+            result += ".";
             return result;
         }
 

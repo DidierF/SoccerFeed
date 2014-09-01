@@ -98,7 +98,7 @@ namespace WindowsFormsApplication1
             SqlConnection connection = new SqlConnection(csb.ConnectionString);
             int ID = gm.ID;
             string stadium = gm.homeTeam().Stadium;
-            DateTime time = gm.GameTime;
+            DateTime time = gm.StartTime;
             
             //Not sure if connection works like that.
             //Might have to create different using.
@@ -111,7 +111,7 @@ namespace WindowsFormsApplication1
                 command.Parameters.Clear();
                 command.Parameters.AddWithValue("@ID", gm.ID);
                 command.Parameters.AddWithValue("@stadium", gm.homeTeam().Stadium);
-                command.Parameters.AddWithValue("@time", gm.GameTime.ToString("h:mm:ss"));
+                command.Parameters.AddWithValue("@time", gm.StartTime.ToString("h:mm:ss"));
                 command.Parameters.AddWithValue("@homeTeam", gm.homeTeam().Name);
                 command.Parameters.AddWithValue("@awayTeam", gm.awayTeam().Name);
 

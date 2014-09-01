@@ -10,7 +10,7 @@ namespace WindowsFormsApplication1
         private DateTime currentTime;
         private TimeSpan actualTime;
         private Player mainPlayer, auxPlayer; 
-        private int annotationMotive;//, team1, team2; 
+        private int annotationMotive; 
 
         public Game Game
         {
@@ -34,15 +34,14 @@ namespace WindowsFormsApplication1
             this.Game = gm;
             team1Check.Text = game.homeTeam().Name;
             team2Check.Text = game.awayTeam().Name;
-            currentTime = new DateTime(); 
-            //team1 = 0;
-            //team2 = 0; 
+            currentTime = new DateTime();
+
             playComboBox.Items.AddRange(new string[] 
             {
                 "Goal", "Foul", "Red Card", "Yellow Card", "Substitution",
                 "Goal Kick", "Throw In", "Corner", "Offside", "Free Throw", "Penalty"
             });
-            annotationHistory.AppendText("[" + System.DateTime.Now + "] " + "Game Start\n");
+            annotationHistory.AppendText("[" + System.DateTime.Now + "] " + "Game Start.\n");
             annotationHistory.Update(); 
             timer1.Interval = 1000; 
             timer1.Start();
@@ -104,7 +103,7 @@ namespace WindowsFormsApplication1
             if (!(playerComboBox.SelectedItem == null || playComboBox.SelectedItem == null) && 
                 !(auxComboBox.Enabled && auxComboBox.SelectedItem == null && playComboBox.SelectedIndex != 0))
             {
-            DateTime currentTime = game.GameTime.Add(actualTime);
+            DateTime currentTime = game.StartTime.Add(actualTime);
             int motive = playComboBox.SelectedIndex;
             int newID = new DataBaseInterface().GetNewAnnotationID();
             Annotation ann = new Annotation(currentTime, this.mainPlayer, this.auxPlayer, annotationMotive, newID);
@@ -196,7 +195,7 @@ namespace WindowsFormsApplication1
         private void timer1_Tick(object sender, EventArgs e)
         {
            currentTime = System.DateTime.Now; 
-           actualTime = currentTime.Subtract(game.GameTime);
+           actualTime = currentTime.Subtract(game.StartTime);
            time.Text = actualTime.Minutes + ":" + actualTime.Seconds;  
         }
 

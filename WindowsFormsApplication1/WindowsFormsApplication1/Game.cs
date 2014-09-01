@@ -19,11 +19,15 @@ namespace WindowsFormsApplication1
         //Game starting time.
         private DateTime startTime;
 
+        private TimeSpan gameTime;
+
         private int[] score = new int[] { 0, 0 };
 
         public int ID { get { return id; } }
-        public DateTime GameTime { get { return startTime; } }
+        public DateTime StartTime { get { return startTime; } }
         public int[] Score { get { return score; } }
+
+        public TimeSpan GameTime { get { return gameTime; } }
 
         public Game(int id, Team t1, Team t2)
         {
@@ -76,6 +80,11 @@ namespace WindowsFormsApplication1
         public Team awayTeam()
         {
             return teams[1];
+        }
+
+        public void GameTimeTick(TimeSpan ts)
+        {
+            gameTime.Add(ts);
         }
     }
 }
