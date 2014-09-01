@@ -86,7 +86,7 @@ namespace WindowsFormsApplication1
                     }
                     break; 
                 case 1:
-                    result += player.Name + " performed a " + Motive + " to " + auxPlayer.Name;
+                    result += player.Name + " commited a " + Motive + " to " + auxPlayer.Name;
                     break; 
                 case 2:
                 case 3:
@@ -101,11 +101,13 @@ namespace WindowsFormsApplication1
                 case 5:
                 case 6:
                 case 7:
-                case 8:
                 case 9: 
                 case 10:  
                     result += player.Name + " performed a " + Motive;
                     break;
+                case 8:
+                    result += player.Name + " commited a " + Motive;
+                    break; 
 
             }
             result += ".";
