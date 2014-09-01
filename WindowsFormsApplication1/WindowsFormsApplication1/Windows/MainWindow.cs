@@ -86,16 +86,63 @@ namespace WindowsFormsApplication1
 
         private void insertBtn_Click(object sender, EventArgs e)
         {
-            DateTime currentTime = game.GameTime.Add(actualTime); 
+            DateTime currentTime = game.GameTime.Add(actualTime);
             int motive = playComboBox.SelectedIndex;
             int newID = new DataBaseInterface().GetNewAnnotationID();
             Annotation ann = new Annotation(currentTime, this.mainPlayer, this.auxPlayer, annotationMotive, newID);
-            
+
             game.addAnnotation(ann);
             new DataBaseInterface().SaveAnnotation(game, ann);
 
             annotationHistory.AppendText(ann.ToString() + "\n");
             annotationHistory.Update();
+
+            if (annotationMotive == 4)
+            {
+                if (team1Check.Checked)
+                {
+                    mainPlayer.HasPlayed = false;
+                    game.homeTeam().InGamePlayers.Add(auxPlayer);
+                    game.homeTeam().InGamePlayers.Remove(mainPlayer);
+                    game.homeTeam().AvailablePlayers().Add(mainPlayer);
+                    game.homeTeam().AvailablePlayers().Remove(auxPlayer);
+                    playerComboBox.Items.Clear();
+                    auxComboBox.Items.Clear(); 
+                    foreach (Player p in game.homeTeam().InGamePlayers)
+                    {
+                        playerComboBox.Items.Add(p.Name);
+                    }
+                    foreach (Player p in game.homeTeam().AvailablePlayers())
+                    {
+                        auxComboBox.Items.Add(p.Name); 
+                    }
+                }if (team2Check.Checked)
+                {
+                    mainPlayer.HasPlayed = false;
+                    game.awayTeam().InGamePlayers.Add(auxPlayer);
+                    game.awayTeam().InGamePlayers.Remove(mainPlayer);
+                    game.awayTeam().AvailablePlayers().Add(mainPlayer);
+                    game.awayTeam().AvailablePlayers().Remove(auxPlayer);
+                    playerComboBox.Items.Clear();
+                    auxComboBox.Items.Clear(); 
+                    foreach (Player p in game.awayTeam().InGamePlayers)
+                    {
+                        playerComboBox.Items.Add(p.Name);
+                    }
+                    foreach (Player p in game.awayTeam().AvailablePlayers())
+                    {
+                        auxComboBox.Items.Add(p.Name); 
+                    }
+                }
+
+            }
+            playerComboBox.ResetText();
+            playComboBox.ResetText();
+            auxComboBox.ResetText();
+            mainPlayer = null;
+            annotationMotive = '0';
+            auxPlayer = null; 
+
         }
 
         private void playComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -196,7 +243,7 @@ namespace WindowsFormsApplication1
                 case 4:
                     if(team1Check.Checked)
                     {
-                        this.auxPlayer = game.homeTeam().AvailablePlayers()[auxCB.SelectedIndex]; 
+                        this.auxPlayer = game.homeTeam().AvailablePlayers()[auxCB.SelectedIndex];
                     }
                     if(team2Check.Checked)
                     {

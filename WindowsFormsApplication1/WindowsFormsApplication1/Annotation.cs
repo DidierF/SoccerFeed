@@ -108,8 +108,11 @@ namespace WindowsFormsApplication1
                 case 3:
                     result = "[" + time + "] " + player.Name + " received a " + Motive;
                     break; 
-                case 4: 
-                    result = "[" + time + "]" + player.Name + " was replaced by " + auxPlayer.Name;
+                case 4:
+                    if (auxPlayer != null)
+                    {
+                        result = "[" + time + "]" + player.Name + " was replaced by " + auxPlayer.Name;
+                    }
                     break; 
                 case 5:
                 case 6:
