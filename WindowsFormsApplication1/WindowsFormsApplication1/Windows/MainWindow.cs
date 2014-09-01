@@ -99,49 +99,15 @@ namespace WindowsFormsApplication1
 
             if (annotationMotive == 4)
             {
-                if (team1Check.Checked)
-                {
-                    mainPlayer.HasPlayed = false;
-                    game.homeTeam().InGamePlayers.Add(auxPlayer);
-                    game.homeTeam().InGamePlayers.Remove(mainPlayer);
-                    game.homeTeam().AvailablePlayers().Add(mainPlayer);
-                    game.homeTeam().AvailablePlayers().Remove(auxPlayer);
-                    playerComboBox.Items.Clear();
-                    auxComboBox.Items.Clear(); 
-                    foreach (Player p in game.homeTeam().InGamePlayers)
-                    {
-                        playerComboBox.Items.Add(p.Name);
-                    }
-                    foreach (Player p in game.homeTeam().AvailablePlayers())
-                    {
-                        auxComboBox.Items.Add(p.Name); 
-                    }
-                }if (team2Check.Checked)
-                {
-                    mainPlayer.HasPlayed = false;
-                    game.awayTeam().InGamePlayers.Add(auxPlayer);
-                    game.awayTeam().InGamePlayers.Remove(mainPlayer);
-                    game.awayTeam().AvailablePlayers().Add(mainPlayer);
-                    game.awayTeam().AvailablePlayers().Remove(auxPlayer);
-                    playerComboBox.Items.Clear();
-                    auxComboBox.Items.Clear(); 
-                    foreach (Player p in game.awayTeam().InGamePlayers)
-                    {
-                        playerComboBox.Items.Add(p.Name);
-                    }
-                    foreach (Player p in game.awayTeam().AvailablePlayers())
-                    {
-                        auxComboBox.Items.Add(p.Name); 
-                    }
-                }
-
+                substitution(); 
             }
             playerComboBox.ResetText();
             playComboBox.ResetText();
             auxComboBox.ResetText();
             mainPlayer = null;
             annotationMotive = '0';
-            auxPlayer = null; 
+            auxPlayer = null;
+            auxComboBox.Enabled = false; 
 
         }
 
@@ -267,6 +233,46 @@ namespace WindowsFormsApplication1
             }
         }
 
+        private void substitution()
+        {
+            if (team1Check.Checked)
+            {
+                mainPlayer.HasPlayed = false;
+                auxPlayer.HasPlayed = true; 
+                game.homeTeam().InGamePlayers.Add(auxPlayer);
+                game.homeTeam().InGamePlayers.Remove(mainPlayer);
+                game.homeTeam().AvailablePlayers().Add(mainPlayer);
+                game.homeTeam().AvailablePlayers().Remove(auxPlayer);
+                playerComboBox.Items.Clear();
+                auxComboBox.Items.Clear();
+                foreach (Player p in game.homeTeam().InGamePlayers)
+                {
+                    playerComboBox.Items.Add(p.Name);
+                }
+                foreach (Player p in game.homeTeam().AvailablePlayers())
+                {
+                    auxComboBox.Items.Add(p.Name);
+                }
+            } if (team2Check.Checked)
+            {
+                mainPlayer.HasPlayed = false;
+                auxPlayer.HasPlayed = true; 
+                game.awayTeam().InGamePlayers.Add(auxPlayer);
+                game.awayTeam().InGamePlayers.Remove(mainPlayer);
+                game.awayTeam().AvailablePlayers().Add(mainPlayer);
+                game.awayTeam().AvailablePlayers().Remove(auxPlayer);
+                playerComboBox.Items.Clear();
+                auxComboBox.Items.Clear();
+                foreach (Player p in game.awayTeam().InGamePlayers)
+                {
+                    playerComboBox.Items.Add(p.Name);
+                }
+                foreach (Player p in game.awayTeam().AvailablePlayers())
+                {
+                    auxComboBox.Items.Add(p.Name);
+                }
+            }
+        }
 
 
 
