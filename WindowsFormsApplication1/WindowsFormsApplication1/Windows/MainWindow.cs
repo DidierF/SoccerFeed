@@ -40,7 +40,7 @@ namespace WindowsFormsApplication1
                 "Goal", "Foul", "Red Card", "Yellow Card", "Substitution",
                 "Goal Kick", "Throw In", "Corner", "Offside", "Free Throw", "Penalty"
             });
-            annotationHistory.AppendText("[" + System.DateTime.Now + "] " + "Game Start");
+            annotationHistory.AppendText("[" + System.DateTime.Now + "] " + "Game Start.\n");
             annotationHistory.Update(); 
             timer1.Interval = 1000; 
             timer1.Start();
@@ -190,6 +190,8 @@ namespace WindowsFormsApplication1
             {
                 this.mainPlayer = game.awayTeam().InGamePlayers[playerComboBox.SelectedIndex];
             }
+            auxComboBox.Update();
+            auxComboBox.Text = "";
         }
 
 

@@ -76,6 +76,7 @@
             this.away.Size = new System.Drawing.Size(184, 21);
             this.away.TabIndex = 3;
             this.away.Text = "Away";
+            this.away.SelectedIndexChanged += new System.EventHandler(this.away_SelectedIndexChanged);
             // 
             // Team1Players
             // 
