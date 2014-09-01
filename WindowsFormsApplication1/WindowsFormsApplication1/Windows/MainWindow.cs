@@ -10,7 +10,7 @@ namespace WindowsFormsApplication1
         private DateTime currentTime;
         private TimeSpan actualTime;
         private Player mainPlayer, auxPlayer; 
-        private int annotationMotive; 
+        private int annotationMotive, team1, team2; 
 
         public Game Game
         {
@@ -35,6 +35,8 @@ namespace WindowsFormsApplication1
             team1Check.Text = game.homeTeam().Name;
             team2Check.Text = game.awayTeam().Name;
             currentTime = new DateTime(); 
+            team1 = 0;
+            team2 = 0; 
             playComboBox.Items.AddRange(new string[] 
             {
                 "Goal", "Foul", "Red Card", "Yellow Card", "Substitution",
@@ -88,28 +90,32 @@ namespace WindowsFormsApplication1
         {
             if (!(playerComboBox.SelectedItem == null || playComboBox.SelectedItem == null) && !(auxComboBox.Enabled && auxComboBox.SelectedItem == null))
             {
-                DateTime currentTime = game.GameTime.Add(actualTime);
-                int motive = playComboBox.SelectedIndex;
-                int newID = new DataBaseInterface().GetNewAnnotationID();
-                Annotation ann = new Annotation(currentTime, this.mainPlayer, this.auxPlayer, annotationMotive, newID);
+            DateTime currentTime = game.GameTime.Add(actualTime);
+            int motive = playComboBox.SelectedIndex;
+            int newID = new DataBaseInterface().GetNewAnnotationID();
+            Annotation ann = new Annotation(currentTime, this.mainPlayer, this.auxPlayer, annotationMotive, newID);
 
-                game.addAnnotation(ann);
-                new DataBaseInterface().SaveAnnotation(game, ann);
+            game.addAnnotation(ann);
+            new DataBaseInterface().SaveAnnotation(game, ann);
 
-                annotationHistory.AppendText(ann.ToString() + "\n");
-                annotationHistory.Update();
+            annotationHistory.AppendText(ann.ToString() + "\n");
+            annotationHistory.Update();
 
-                if (annotationMotive == 4)
-                {
-                    substitution();
-                }
-                playerComboBox.ResetText();
-                playComboBox.ResetText();
-                auxComboBox.ResetText();
-                mainPlayer = null;
-                annotationMotive = '0';
-                auxPlayer = null;
-                auxComboBox.Enabled = false;  
+            if (annotationMotive == 0)
+            {
+                goal(); 
+            }
+            if (annotationMotive == 4)
+            {
+                substitution(); 
+            }
+            playerComboBox.ResetText();
+            playComboBox.ResetText();
+            auxComboBox.ResetText();
+            mainPlayer = null;
+            annotationMotive = '0';
+            auxPlayer = null;
+            auxComboBox.Enabled = false; 
             }
 
         }
@@ -274,6 +280,20 @@ namespace WindowsFormsApplication1
                 {
                     auxComboBox.Items.Add(p.Name);
                 }
+            }
+        }
+
+        private void goal()
+        {
+            if (team1Check.Checked)
+            {
+                team1++;
+                team1Score.Text = team1.ToString(); 
+            }
+            if(team2Check.Checked)
+            {
+                team2++;
+                team2Score.Text = team2.ToString(); 
             }
         }
 
