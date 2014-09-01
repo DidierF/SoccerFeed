@@ -40,14 +40,14 @@ namespace WindowsFormsApplication1
                 "Goal", "Foul", "Red Card", "Yellow Card", "Substitution",
                 "Goal Kick", "Throw In", "Corner", "Offside", "Free Throw", "Penalty"
             });
-            annotationHistory.AppendText("[" + System.DateTime.Now + "] " + "Game Start.\n");
+            annotationHistory.AppendText("[" + System.DateTime.Now + "] " + "Game Start\n");
             annotationHistory.Update(); 
             timer1.Interval = 1000; 
             timer1.Start();
-            DisplayAnnotatinos(game.ID);
+            DisplayAnnotations(game.ID);
         }
 
-        private void DisplayAnnotatinos(int p)
+        private void DisplayAnnotations(int p)
         {
             List<Annotation> anns = new DataBaseInterface().GetAnnotations(p);
 
@@ -127,18 +127,6 @@ namespace WindowsFormsApplication1
                         players = game.awayTeam().InGamePlayers;
                     }
                     break;
-                case 4:
-                    auxComboBox.ResetText();
-                    auxComboBox.Enabled = true;
-                    if (team1Check.Checked)
-                    {
-                        players = game.homeTeam().AvailablePlayers();
-                    }
-                    else if (team2Check.Checked)
-                    {
-                        players = game.awayTeam().AvailablePlayers();
-                    }
-                    break;
                 case 1:
                     auxComboBox.ResetText();
                     auxComboBox.Enabled = true;
@@ -149,6 +137,18 @@ namespace WindowsFormsApplication1
                     else if (team2Check.Checked)
                     {
                         players = game.homeTeam().InGamePlayers;
+                    }
+                    break;
+                case 4:
+                    auxComboBox.ResetText();
+                    auxComboBox.Enabled = true;
+                    if (team1Check.Checked)
+                    {
+                        players = game.homeTeam().AvailablePlayers();
+                    }
+                    else if (team2Check.Checked)
+                    {
+                        players = game.awayTeam().AvailablePlayers();
                     }
                     break;
             }
@@ -170,13 +170,41 @@ namespace WindowsFormsApplication1
         private void auxComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox auxCB = (ComboBox)sender;
-            if (team1Check.Checked)
+
+            switch (annotationMotive)
             {
-                this.auxPlayer = game.awayTeam().AvailablePlayers()[auxCB.SelectedIndex];
-            }
-            else
-            {
-                this.auxPlayer = game.homeTeam().AvailablePlayers()[auxCB.SelectedIndex];
+                case 0: 
+                    if(team1Check.Checked)
+                    {
+                        this.auxPlayer = game.homeTeam().InGamePlayers[auxCB.SelectedIndex]; 
+                    }
+                    if(team2Check.Checked)
+                    {
+                        this.auxPlayer = game.awayTeam().InGamePlayers[auxCB.SelectedIndex];
+                    }
+                    break; 
+                case 1:
+                    if(team1Check.Checked)
+                    {
+                        this.auxPlayer = game.awayTeam().InGamePlayers[auxCB.SelectedIndex]; 
+                    }
+                    if (team2Check.Checked)
+                    {
+                        this.auxPlayer = game.homeTeam().InGamePlayers[auxCB.SelectedIndex]; 
+                    }
+                    break;
+                case 4:
+                    if(team1Check.Checked)
+                    {
+                        this.auxPlayer = game.homeTeam().AvailablePlayers()[auxCB.SelectedIndex]; 
+                    }
+                    if(team2Check.Checked)
+                    {
+                        this.auxPlayer = game.awayTeam().AvailablePlayers()[auxCB.SelectedIndex]; 
+                    }
+                    break;
+                default:
+                    break; 
             }
         }
 
@@ -190,8 +218,6 @@ namespace WindowsFormsApplication1
             {
                 this.mainPlayer = game.awayTeam().InGamePlayers[playerComboBox.SelectedIndex];
             }
-            auxComboBox.Update();
-            auxComboBox.Text = "";
         }
 
 
