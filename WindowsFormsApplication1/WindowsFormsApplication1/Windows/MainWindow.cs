@@ -10,7 +10,7 @@ namespace WindowsFormsApplication1
         private DateTime currentTime;
         private TimeSpan actualTime;
         private Player mainPlayer, auxPlayer; 
-        private int annotationMotive; 
+        private int annotationMotive, team1, team2; 
 
         public Game Game
         {
@@ -34,7 +34,9 @@ namespace WindowsFormsApplication1
             this.Game = gm;
             team1Check.Text = game.homeTeam().Name;
             team2Check.Text = game.awayTeam().Name;
-            currentTime = new DateTime(); 
+            currentTime = new DateTime();
+            team1 = 0;
+            team2 = 0; 
             playComboBox.Items.AddRange(new string[] 
             {
                 "Goal", "Foul", "Red Card", "Yellow Card", "Substitution",
@@ -97,6 +99,10 @@ namespace WindowsFormsApplication1
             annotationHistory.AppendText(ann.ToString() + "\n");
             annotationHistory.Update();
 
+            if (annotationMotive == 0)
+            {
+                goal(); 
+            }
             if (annotationMotive == 4)
             {
                 substitution(); 
@@ -271,6 +277,20 @@ namespace WindowsFormsApplication1
                 {
                     auxComboBox.Items.Add(p.Name);
                 }
+            }
+        }
+
+        private void goal()
+        {
+            if (team1Check.Checked)
+            {
+                team1++;
+                team1Score.Text = team1.ToString(); 
+            }
+            if(team2Check.Checked)
+            {
+                team2++;
+                team2Score.Text = team2.ToString(); 
             }
         }
 
