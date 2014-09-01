@@ -36,6 +36,8 @@
             this.Stadium = new System.Windows.Forms.TextBox();
             this.Date = new System.Windows.Forms.TextBox();
             this.Team2Players = new System.Windows.Forms.TextBox();
+            this.Logo = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.Logo)).BeginInit();
             this.SuspendLayout();
             // 
             // OpenBtn
@@ -114,11 +116,21 @@
             this.Team2Players.Size = new System.Drawing.Size(184, 328);
             this.Team2Players.TabIndex = 8;
             // 
+            // Logo
+            // 
+            this.Logo.Image = global::WindowsFormsApplication1.Properties.Resources.Soccer_Feed_Logo;
+            this.Logo.Location = new System.Drawing.Point(179, 9);
+            this.Logo.Name = "Logo";
+            this.Logo.Size = new System.Drawing.Size(85, 85);
+            this.Logo.TabIndex = 9;
+            this.Logo.TabStop = false;
+            // 
             // StartWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(443, 555);
+            this.Controls.Add(this.Logo);
             this.Controls.Add(this.Team2Players);
             this.Controls.Add(this.Date);
             this.Controls.Add(this.Stadium);
@@ -129,6 +141,7 @@
             this.Controls.Add(this.OpenBtn);
             this.Name = "StartWindow";
             this.Text = "StartWindow";
+            ((System.ComponentModel.ISupportInitialize)(this.Logo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -144,5 +157,6 @@
         private System.Windows.Forms.TextBox Stadium;
         private System.Windows.Forms.TextBox Date;
         private System.Windows.Forms.TextBox Team2Players;
+        private System.Windows.Forms.PictureBox Logo;
     }
 }

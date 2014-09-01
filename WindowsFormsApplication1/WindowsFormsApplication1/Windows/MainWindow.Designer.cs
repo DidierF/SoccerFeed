@@ -41,6 +41,8 @@ namespace WindowsFormsApplication1
             this.team2Check = new System.Windows.Forms.RadioButton();
             this.insertBtn = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // annotationHistory
@@ -54,7 +56,7 @@ namespace WindowsFormsApplication1
             // playComboBox
             // 
             this.playComboBox.FormattingEnabled = true;
-            this.playComboBox.Location = new System.Drawing.Point(233, 76);
+            this.playComboBox.Location = new System.Drawing.Point(233, 92);
             this.playComboBox.Name = "playComboBox";
             this.playComboBox.Size = new System.Drawing.Size(179, 21);
             this.playComboBox.TabIndex = 6;
@@ -63,7 +65,7 @@ namespace WindowsFormsApplication1
             // playerComboBox
             // 
             this.playerComboBox.FormattingEnabled = true;
-            this.playerComboBox.Location = new System.Drawing.Point(13, 76);
+            this.playerComboBox.Location = new System.Drawing.Point(13, 92);
             this.playerComboBox.Name = "playerComboBox";
             this.playerComboBox.Size = new System.Drawing.Size(179, 21);
             this.playerComboBox.TabIndex = 7;
@@ -72,7 +74,7 @@ namespace WindowsFormsApplication1
             // auxComboBox
             // 
             this.auxComboBox.FormattingEnabled = true;
-            this.auxComboBox.Location = new System.Drawing.Point(450, 76);
+            this.auxComboBox.Location = new System.Drawing.Point(450, 92);
             this.auxComboBox.Name = "auxComboBox";
             this.auxComboBox.Size = new System.Drawing.Size(179, 21);
             this.auxComboBox.TabIndex = 8;
@@ -81,7 +83,7 @@ namespace WindowsFormsApplication1
             // time
             // 
             this.time.AutoSize = true;
-            this.time.Location = new System.Drawing.Point(595, 17);
+            this.time.Location = new System.Drawing.Point(595, 33);
             this.time.Name = "time";
             this.time.Size = new System.Drawing.Size(34, 13);
             this.time.TabIndex = 9;
@@ -90,7 +92,7 @@ namespace WindowsFormsApplication1
             // team1Score
             // 
             this.team1Score.AutoSize = true;
-            this.team1Score.Location = new System.Drawing.Point(145, 15);
+            this.team1Score.Location = new System.Drawing.Point(144, 35);
             this.team1Score.Name = "team1Score";
             this.team1Score.Size = new System.Drawing.Size(13, 13);
             this.team1Score.TabIndex = 10;
@@ -99,7 +101,7 @@ namespace WindowsFormsApplication1
             // team2Score
             // 
             this.team2Score.AutoSize = true;
-            this.team2Score.Location = new System.Drawing.Point(145, 34);
+            this.team2Score.Location = new System.Drawing.Point(144, 54);
             this.team2Score.Name = "team2Score";
             this.team2Score.Size = new System.Drawing.Size(13, 13);
             this.team2Score.TabIndex = 11;
@@ -108,7 +110,7 @@ namespace WindowsFormsApplication1
             // team1Check
             // 
             this.team1Check.AutoSize = true;
-            this.team1Check.Location = new System.Drawing.Point(13, 13);
+            this.team1Check.Location = new System.Drawing.Point(12, 33);
             this.team1Check.Name = "team1Check";
             this.team1Check.Size = new System.Drawing.Size(85, 17);
             this.team1Check.TabIndex = 12;
@@ -120,7 +122,7 @@ namespace WindowsFormsApplication1
             // team2Check
             // 
             this.team2Check.AutoSize = true;
-            this.team2Check.Location = new System.Drawing.Point(13, 32);
+            this.team2Check.Location = new System.Drawing.Point(12, 52);
             this.team2Check.Name = "team2Check";
             this.team2Check.Size = new System.Drawing.Size(85, 17);
             this.team2Check.TabIndex = 13;
@@ -131,7 +133,7 @@ namespace WindowsFormsApplication1
             // 
             // insertBtn
             // 
-            this.insertBtn.Location = new System.Drawing.Point(513, 112);
+            this.insertBtn.Location = new System.Drawing.Point(513, 118);
             this.insertBtn.Name = "insertBtn";
             this.insertBtn.Size = new System.Drawing.Size(116, 36);
             this.insertBtn.TabIndex = 14;
@@ -144,11 +146,21 @@ namespace WindowsFormsApplication1
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::WindowsFormsApplication1.Properties.Resources.Soccer_Feed_Logo;
+            this.pictureBox1.Location = new System.Drawing.Point(284, 1);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(88, 89);
+            this.pictureBox1.TabIndex = 15;
+            this.pictureBox1.TabStop = false;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(641, 507);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.insertBtn);
             this.Controls.Add(this.team2Check);
             this.Controls.Add(this.team1Check);
@@ -161,6 +173,7 @@ namespace WindowsFormsApplication1
             this.Controls.Add(this.annotationHistory);
             this.Name = "MainWindow";
             this.Text = "SoccerFeed";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -179,6 +192,7 @@ namespace WindowsFormsApplication1
         private RadioButton team2Check;
         private Button insertBtn;
         private Timer timer1;
+        private PictureBox pictureBox1;
     }
 }
 
